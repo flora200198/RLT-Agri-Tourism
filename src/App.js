@@ -6,6 +6,7 @@ import Home from './Pages/Home/Home';
 import Activities from './Pages/Activities/Activities';
 import Contact from './Pages/Contact/Contact';
 import './App.css';
+import BookingWizard from './Pages/Booking/Booking';
 
 
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/activities" element={<Activities />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path='/book' element={< BookingWizard />} />
       </Routes>
       <Footer />
     </>
