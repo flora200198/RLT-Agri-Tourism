@@ -11,56 +11,56 @@ const HeroSection = () => {
     <>
       {/* HERO */}
       <section className="position-relative overflow-hidden" style={{ height: "68vh", minHeight: 420 }}>
-  {/* Background Video */}
-  <video
-    className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover oppacity-75" 
-    src="/assets/Landing Video.mp4"   // place your file in public/assets/
-    autoPlay
-    muted
-    loop
-    playsInline
-  />
+        {/* Background Video */}
+        <video
+          className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover oppacity-75"
+          src="/assets/Landing Video.mp4"   // place your file in public/assets/
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
 
-  {/* Dark Overlay */}
-  <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25" />
+        {/* Dark Overlay */}
+        <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25" />
 
-  {/* Overlay Content */}
-  <div className="position-absolute top-50 start-50 translate-middle text-center text-white px-3 px-md-5">
-    {/* <h1 className="display-5 fw-bold">Welcome to Green Valley Farm</h1> */}
-    <p className="lead mb-4">
-      Experience nature like never before — fresh air, happy animals, and real
-      farm-to-table goodness.
-    </p>
+        {/* Overlay Content */}
+        <div className="position-absolute top-50 start-50 translate-middle text-center text-white px-3 px-md-5">
+          {/* <h1 className="display-5 fw-bold">Welcome to Green Valley Farm</h1> */}
+          <p className="lead mb-4">
+            Experience nature like never before — fresh air, happy animals, and real
+            farm-to-table goodness.
+          </p>
 
-    <div className="d-flex gap-3 justify-content-center flex-wrap">
-      <button
-        onClick={handleExploreActivities}
-        className="btn btn-primary btn-lg"
-      >
-        Explore Activities
-      </button>
-      <button className="btn btn-outline-light btn-lg">
-        Book a Farm Visit
-      </button>
-    </div>
+          <div className="d-flex gap-3 justify-content-center flex-wrap">
+            <button
+              onClick={handleExploreActivities}
+              className="btn btn-primary btn-lg"
+            >
+              Explore Activities
+            </button>
+            <button className="btn btn-outline-light btn-lg">
+              Book a Farm Visit
+            </button>
+          </div>
 
-    {/* Quick stats */}
-    <div className="d-flex gap-4 gap-md-5 justify-content-center mt-4 flex-wrap">
-      <div className="d-flex align-items-center gap-2">
-        <i className="bi bi-people fs-4" aria-hidden="true"></i>
-        <span>10k+ Animals & Trees</span>
-      </div>
-      <div className="d-flex align-items-center gap-2">
-        <i className="bi bi-droplet fs-4" aria-hidden="true"></i>
-        <span>Pure & Fresh Milk</span>
-      </div>
-      <div className="d-flex align-items-center gap-2">
-        <i className="bi bi-shield-check fs-4" aria-hidden="true"></i>
-        <span>Hygiene Assured</span>
-      </div>
-    </div>
-  </div>
-</section>
+          {/* Quick stats */}
+          <div className="d-flex gap-4 gap-md-5 justify-content-center mt-4 flex-wrap">
+            <div className="d-flex align-items-center gap-2">
+              <i className="bi bi-people fs-4" aria-hidden="true"></i>
+              <span>10k+ Animals & Trees</span>
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <i className="bi bi-droplet fs-4" aria-hidden="true"></i>
+              <span>Pure & Fresh Milk</span>
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <i className="bi bi-shield-check fs-4" aria-hidden="true"></i>
+              <span>Hygiene Assured</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       {/* FEATURES STRIP */}
@@ -98,7 +98,48 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-
+      <section className="about-section container py-5">
+        {/* <h2 className="text-center mb-4 fw-bold">About Green Valley Naturals</h2> */}
+        <p>
+          At <strong>Green Valley Naturals</strong>, our vision is to reshape the way
+          people connect with nourishment by offering food that is pure, vibrant, and
+          rooted in nature. We have taken bold steps as early movers in natural
+          farming and continue to champion wholesome living. Our farms are built on a
+          foundation that blends ecological care, time-honored methods, and scientific
+          insight – ensuring food that is good for the body and kind to the planet.
+        </p>
+        <p>
+          Milk remains one of the rare foods that naturally delivers most of the
+          essential nutrients required for growth and well-being.{" "}
+          <strong>Green Valley Naturals</strong> is India’s first organic dairy
+          collective that unites contemporary practices with ancestral wisdom in
+          animal care. For more than a decade, we have followed a unique model of
+          checking every drop of milk for purity and safety directly at the farm and
+          processing facilities. By keeping away what doesn’t belong, we ensure that
+          every product is brimming with natural goodness and flavor. It’s milk the
+          way it was meant to be — nourishing, delicious, and sourced from content,
+          well-cared-for animals.
+        </p>
+        <p>
+          Our philosophy is simple: cultivate for tomorrow. Along with producing food
+          responsibly, we are committed to safeguarding the environment, conserving
+          biodiversity, and respecting the delicate balance of ecosystems. Every
+          initiative across our farms and facilities is guided by principles of
+          sustainability, balance, and long-term health of the soil.
+        </p>
+        <p>
+          At the heart of our movement are our partner farmers. Through
+          entrepreneurship and training programs, we empower rural families to thrive,
+          honoring their craft and restoring pride in agriculture. Every harvest that
+          leaves our farms carries not just nutrition but also the values of honesty,
+          care, and respect.
+        </p>
+        <p>
+          No matter where you are on your wellness path, when you welcome{" "}
+          <strong>Green Valley Naturals</strong> into your life, you’ll discover food
+          that truly nourishes and a way of living that feels deeply rewarding.
+        </p>
+      </section>
       {/* IMAGE MOSAIC + INFO */}
       <section className="py-5">
         <div className="container">
@@ -121,7 +162,7 @@ const HeroSection = () => {
                 </div>
                 <div className="col-12">
                   <img
-                    src="https://images.unsplash.com/photo-1498842812179-c81beecf902c?q=80&w=1600&auto=format&fit=crop"
+                    src="/assets/Farm-booking.png"
                     alt="Fresh farm produce in baskets"
                     className="img-fluid rounded-3 shadow-sm"
                   />

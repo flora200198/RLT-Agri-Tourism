@@ -60,11 +60,12 @@ a:hover {
   position: relative;
   text-align: center;
   color: var(--text-light);
-  background: linear-gradient(
-      rgba(46, 125, 50, 0.6),
-      rgba(21, 101, 192, 0.5)
-    ),
-    url("https://placehold.co/1920x1080") center/cover no-repeat;
+ background: linear-gradient(
+  135deg,
+  rgba(46, 125, 50, 0.9),
+  rgba(102, 187, 106, 0.7)
+),
+ url("https://placehold.co/1920x1080") center/cover no-repeat;
   padding: 100px 20px;
 }
 
