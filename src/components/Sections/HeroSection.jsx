@@ -146,7 +146,7 @@ const HeroSection = () => {
           <div className="row g-4 align-items-center">
             <div className="col-12 col-lg-6">
               <div className="row g-3">
-                <div className="col-6">
+                {/* <div className="col-6">
                   <img
                     src="https://images.unsplash.com/photo-1578301978018-3005759f48d7?q=80&w=1200&auto=format&fit=crop"
                     alt="Happy cows grazing"
@@ -159,7 +159,7 @@ const HeroSection = () => {
                     alt="Sun-drenched fields"
                     className="img-fluid rounded-3 shadow-sm"
                   />
-                </div>
+                </div> */}
                 <div className="col-12">
                   <img
                     src="/assets/Farm-booking.png"
