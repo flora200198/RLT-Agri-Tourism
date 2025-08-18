@@ -28,12 +28,12 @@ const HeroSection = () => {
           </p>
 
           <div className="d-flex gap-3 justify-content-center flex-wrap">
-            <Button variant="primary" size="lg">
+            <button  className="btn-primary btn-outline-light" size="lg">
               Explore Activities
-            </Button>
-            <Button variant="outline-light" size="lg">
+            </button>
+            <button className="btn-primary btn-outline-light" size="lg">
               Book a Farm Visit
-            </Button>
+            </button>
           </div>
 
           {/* Quick stats */}
@@ -121,7 +121,7 @@ const HeroSection = () => {
             </div>
 
             <div className="col-12 col-lg-6">
-              <h2 className="fw-semibold">From Our Farm to Your Table</h2>
+              <h2 className="fw-semibold">Book Your Slot</h2>
               <p className="text-muted">
                 We’re a family-run farm dedicated to sustainable practices and
                 wholesome produce. Visit us for guided tours, animal feeding, and
@@ -153,8 +153,8 @@ const HeroSection = () => {
               </ul>
 
               <div className="d-flex gap-3 mt-3 flex-wrap">
-                <Button variant="primary">Plan Your Visit</Button>
-                <Button variant="outline-primary">See Products</Button>
+                <button variant="primary">Plan Your Visit</button>
+                <button variant="outline-primary">See Products</button>
               </div>
             </div>
           </div>
