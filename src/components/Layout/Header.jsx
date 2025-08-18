@@ -49,10 +49,25 @@ const Header = () => {
               </NavLink>
               <ul className="dropdown-menu" aria-labelledby="productsDropdown">
                 <li>
-                  <NavLink className="dropdown-item" to="/products/ghee">Ghee</NavLink>
+                  <NavLink className="dropdown-item" to="/products/ghee">Chicken</NavLink>
                 </li>
                 <li>
                   <NavLink className="dropdown-item" to="/products/milk">Milk</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/products/milk">Honey</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/products/milk">Honey Wax</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/products/milk">Guava</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/products/milk">Amla</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/products/milk">Lemon</NavLink>
                 </li>
                 <li>
                   <NavLink className="dropdown-item" to="/products/eggs">Eggs</NavLink>
