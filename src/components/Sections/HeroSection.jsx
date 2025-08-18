@@ -1,11 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
-  const handleExploreActivities = () => {
-    navigate("/activities");
-  };
+ 
   return (
     <>
       {/* HERO */}
@@ -32,15 +29,18 @@ const HeroSection = () => {
           </p>
 
           <div className="d-flex gap-3 justify-content-center flex-wrap">
+            <Link to="/activities">
             <button
-              onClick={handleExploreActivities}
               className="btn btn-primary btn-lg"
             >
               Explore Activities
             </button>
-            <button className="btn btn-outline-light btn-lg">
+            </Link>
+            <Link to="/book">
+            <button className="btn btn-outline-light btn-lg" >
               Book a Farm Visit
-            </button>
+            </button></Link>
+            
           </div>
 
           {/* Quick stats */}
@@ -202,7 +202,7 @@ const HeroSection = () => {
               </ul>
 
               <div className="d-flex gap-3 mt-3 flex-wrap">
-                <button variant="primary">Plan Your Visit</button>
+               <Link to='/book' ><button variant="primary">Plan Your Visit</button> </Link> 
                 <button variant="outline-primary">See Products</button>
               </div>
             </div>
