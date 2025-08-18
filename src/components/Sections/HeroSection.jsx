@@ -1,58 +1,67 @@
 import React from "react";
 import Button from "../Common/Button";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const handleExploreActivities = () => {
+    navigate("/activities");
+  };
   return (
     <>
       {/* HERO */}
-      <section className="position-relative overflow-hidden">
-        {/* Background image */}
-        <div
-          className="w-100"
-          style={{
-            height: "68vh",
-            minHeight: 420,
-            background:
-              "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat",
-          }}
-          aria-label="Panoramic view of Green Valley Farm with lush fields"
-        />
+      <section className="position-relative overflow-hidden" style={{ height: "68vh", minHeight: 420 }}>
+  {/* Background Video */}
+  <video
+    className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover oppacity-75" 
+    src="/assets/Landing Video.mp4"   // place your file in public/assets/
+    autoPlay
+    muted
+    loop
+    playsInline
+  />
 
-        {/* Overlay content */}
-        <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25" />
-        <div className="position-absolute top-50 start-50 translate-middle text-center text-white px-3 px-md-5">
-          <h1 className="display-5 fw-bold">Welcome to Green Valley Farm</h1>
-          <p className="lead mb-4">
-            Experience nature like never before — fresh air, happy animals, and real
-            farm-to-table goodness.
-          </p>
+  {/* Dark Overlay */}
+  <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25" />
 
-          <div className="d-flex gap-3 justify-content-center flex-wrap">
-            <button  className="btn-primary btn-outline-light" size="lg">
-              Explore Activities
-            </button>
-            <button className="btn-primary btn-outline-light" size="lg">
-              Book a Farm Visit
-            </button>
-          </div>
+  {/* Overlay Content */}
+  <div className="position-absolute top-50 start-50 translate-middle text-center text-white px-3 px-md-5">
+    {/* <h1 className="display-5 fw-bold">Welcome to Green Valley Farm</h1> */}
+    <p className="lead mb-4">
+      Experience nature like never before — fresh air, happy animals, and real
+      farm-to-table goodness.
+    </p>
 
-          {/* Quick stats */}
-          <div className="d-flex gap-4 gap-md-5 justify-content-center mt-4 flex-wrap">
-            <div className="d-flex align-items-center gap-2">
-              <i className="bi bi-people fs-4" aria-hidden="true"></i>
-              <span>10k+ Visitors</span>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <i className="bi bi-droplet fs-4" aria-hidden="true"></i>
-              <span>Pure & Fresh Milk</span>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <i className="bi bi-shield-check fs-4" aria-hidden="true"></i>
-              <span>Hygiene Assured</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="d-flex gap-3 justify-content-center flex-wrap">
+      <button
+        onClick={handleExploreActivities}
+        className="btn btn-primary btn-lg"
+      >
+        Explore Activities
+      </button>
+      <button className="btn btn-outline-light btn-lg">
+        Book a Farm Visit
+      </button>
+    </div>
+
+    {/* Quick stats */}
+    <div className="d-flex gap-4 gap-md-5 justify-content-center mt-4 flex-wrap">
+      <div className="d-flex align-items-center gap-2">
+        <i className="bi bi-people fs-4" aria-hidden="true"></i>
+        <span>10k+ Animals & Trees</span>
+      </div>
+      <div className="d-flex align-items-center gap-2">
+        <i className="bi bi-droplet fs-4" aria-hidden="true"></i>
+        <span>Pure & Fresh Milk</span>
+      </div>
+      <div className="d-flex align-items-center gap-2">
+        <i className="bi bi-shield-check fs-4" aria-hidden="true"></i>
+        <span>Hygiene Assured</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* FEATURES STRIP */}
       <section className="py-5 bg-light">

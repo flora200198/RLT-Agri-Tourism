@@ -1,0 +1,27 @@
+.activities-section {
+  background: #fefefe;
+}
+
+.activities-section h2 {
+  color: var(--primary-green);
+  font-size: 2.4rem;
+}
+
+.activity-item {
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.activity-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.activity-item h4 {
+  color: var(--primary-yellow);
+  margin-bottom: 0.5rem;
+}
+
+.activity-item p {
+  color: #f5f5f5;
+}

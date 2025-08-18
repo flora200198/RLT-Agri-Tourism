@@ -85,9 +85,10 @@ a:hover {
 ========================= */
 .btn-primary {
   background-color: var(--primary-yellow);
-  border-color: var(--primary-green);
+  /* border-color: var(--primary-green); */
+   color: var(--text-dark);
   border-radius: 5px;
-  color: var(--text-dark);
+ 
 }
 
 .btn-primary:hover {
@@ -97,7 +98,7 @@ a:hover {
 
 .btn-outline-light {
   border: 2px solid var(--primary-yellow);
-  color: var(--primary-yellow);
+  /* color: var(--primary-yellow); */
 }
 
 .btn-outline-light:hover {
