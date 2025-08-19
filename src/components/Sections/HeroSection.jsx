@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import './HeroSection.css';
 const HeroSection = () => {
  
   return (
@@ -202,8 +202,8 @@ const HeroSection = () => {
               </ul>
 
               <div className="d-flex gap-3 mt-3 flex-wrap">
-               <Link to='/book' ><button variant="primary">Plan Your Visit</button> </Link> 
-                <button variant="outline-primary">See Products</button>
+               <Link to='/book' ><button variant="primary" className="btn btn-primary btn-lg" >Plan Your Visit</button> </Link> 
+                <button variant="outline-primary" className="btn btn-outline-light btn-lg product" >See Products</button>
               </div>
             </div>
           </div>
