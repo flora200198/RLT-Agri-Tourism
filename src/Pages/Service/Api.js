@@ -13,28 +13,6 @@ const MOCK_ROOMS = [
       cancellation: { windowHours: 48, refundPercent: 80, note: "Free date change once (48h notice)." },
     },
   },
-//   {
-//     _id: "r2",
-//     name: "Mango Orchard Room",
-//     capacity: 2,
-//     price: 2600,
-//     amenities: ["Double Bed", "Fan", "Garden View"],
-//     policies: {
-//       houseRules: ["Check-in after 1 PM", "No loud music"],
-//       cancellation: { windowHours: 24, refundPercent: 60, note: "Reschedule options available." },
-//     },
-//   },
-//   {
-//     _id: "r3",
-//     name: "Lotus Pond Suite",
-//     capacity: 4,
-//     price: 4200,
-//     amenities: ["King Bed", "AC", "Private Deck", "Breakfast"],
-//     policies: {
-//       houseRules: ["Check-in after 12 PM", "Pets on request"],
-//       cancellation: { windowHours: 72, refundPercent: 90, note: "Partial refund otherwise." },
-//     },
-//   },
 ];
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));

@@ -6,12 +6,11 @@ import { Link, useParams } from "react-router-dom";
 
 
 const ProductsSection = () => {
-    const { slug } = useParams();
+    // const { slug } = useParams();
     // const product = useMemo(
     //     () => PRODUCTS.find((p) => p.slug === slug),
     //     [slug]
     // );
-   
     return (
         <section className="py-5 bg-light">
             <div className="container">
@@ -28,12 +27,12 @@ const ProductsSection = () => {
                     {PRODUCTS.map((p, idx) => (
                         <div className="col-sm-6 col-lg-4" key={idx}>
                             <Link
-                                to={`/products/${p.slug}`}
+                                to={`/productPage/${p.slug}`}
                                 className="text-decoration-none text-dark"
                             >
                                 <div className="card h-100 border-0 shadow-sm">
                                     <img
-                                        src={p.img}
+                                        src={p.heroImg}
                                         alt={p.name}
                                         className="card-img-top"
                                         style={{ objectFit: "cover", height: "200px" }}
@@ -55,7 +54,6 @@ const ProductsSection = () => {
                         </div>
                     ))}
                 </div>
-
                 {/* Optional: Testimonials placeholder */}
                 <div className="mt-5 text-center">
                     <h3 className="h5">💬 What Our Customers Say</h3>
@@ -68,5 +66,4 @@ const ProductsSection = () => {
         </section>
     );
 };
-
 export default ProductsSection;

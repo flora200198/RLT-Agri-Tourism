@@ -148,7 +148,7 @@ export const PRODUCTS = [
   {
     slug: "chicken",
     name: "Fresh Chicken",
-    heroImg: PLACE("Fresh Chicken"),
+    heroImg: '/assets/Kadaknath.png',
     desc: "Naturally raised, antibiotic-free chicken with rich flavor and tenderness.",
       variants: "Whole & Cut options",
       icon: "bi-basket2",
@@ -171,7 +171,7 @@ export const PRODUCTS = [
   {
     slug: "duck",
     name: "Farm Duck",
-    heroImg: PLACE("Farm Duck"),
+    heroImg: '/assets/Duck.png',
     desc: "Nutritious, free-range ducks raised in natural ponds for rich meat and eggs.",
       variants: "Whole & Fresh cuts",
       icon: "bi-droplet",
@@ -194,7 +194,7 @@ export const PRODUCTS = [
   {
     slug: "fish",
     name: "Fresh Fish",
-    heroImg: PLACE("Fresh Fish"),
+    heroImg: '/assets/Fish.png',
     desc: "Naturally grown in clean ponds, providing chemical-free, protein-rich fish.",
       variants: "Multiple varieties",
       icon: "bi-water",
@@ -217,7 +217,7 @@ export const PRODUCTS = [
   {
     slug: "fruits",
     name: "Seasonal Fruits",
-    heroImg: PLACE("Seasonal Fruits"),
+    heroImg: '/assets/Fruits.png',
      desc: "Hand-picked, naturally grown fruits directly from our orchards, rich in nutrients.",
       variants: "Available seasonally",
       icon: "bi-apple",
@@ -236,7 +236,7 @@ export const PRODUCTS = [
   {
     slug: "guava",
     name: "Guava",
-    heroImg: PLACE("Guava"),
+    heroImg: '/assets/Guava.png',
     short: "Sweet-tart guavas from our orchard—great fresh or in salads.",
     highlights: ["Hand-picked", "Fragrant & juicy", "High in vitamin C"],
     variants: [{ label: "500 g", price: 79 }],
@@ -249,7 +249,7 @@ export const PRODUCTS = [
   {
     slug: "amla",
     name: "Amla (Indian Gooseberry)",
-    heroImg: PLACE("Amla"),
+    heroImg: '/assets/Amla.png',
     short: "Tart and potent—perfect for pickles, powders, or fresh juicing.",
     highlights: ["Naturally grown", "Tart & refreshing", "Multiple culinary uses"],
     variants: [{ label: "500 g", price: 65 }],
@@ -262,7 +262,7 @@ export const PRODUCTS = [
   {
     slug: "lemon",
     name: "Lemon",
-    heroImg: PLACE("Lemon"),
+    heroImg: '/assets/Lemon.png',
     short: "Bright, zesty lemons to elevate everyday cooking and drinks.",
     highlights: ["Juicy & aromatic", "Hand-picked", "Kitchen essential"],
     variants: [{ label: "6 pcs", price: 49 }],

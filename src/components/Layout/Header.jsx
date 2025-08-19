@@ -65,7 +65,6 @@ const Header = () => {
                 <li><Link className="dropdown-item" to="/productPage/duck">Duck</Link></li>
                 <li><Link className="dropdown-item" to="/productPage/fish">Fish</Link></li>
                 <li><Link className="dropdown-item" to="/productPage/fruits">Fruits</Link></li>
-                {/* Optional individual fruits */}
                 <li><Link className="dropdown-item" to="/productPage/guava">Guava</Link></li>
                 <li><Link className="dropdown-item" to="/productPage/amla">Amla</Link></li>
                 <li><Link className="dropdown-item" to="/productPage/lemon">Lemon</Link></li>
