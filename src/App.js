@@ -8,6 +8,8 @@ import Contact from './Pages/Contact/Contact';
 import './App.css';
 import BookingWizard from './Pages/Booking/Booking';
 import AboutFarm from './Pages/About/About';
+import ProductsSection from './Pages/Product/Product';
+import ProductPage from './Pages/Product/ProductDetail';
 
 
 
@@ -19,6 +21,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path='/about' element={<AboutFarm/>} />
         <Route path="/activities" element={<Activities />} />
+        <Route path="/products" element={<ProductsSection />} />
+        <Route path="/productPage/:slug" element={<ProductPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path='/book' element={< BookingWizard />} />
