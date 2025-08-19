@@ -303,7 +303,7 @@ const AboutFarm = () => {
               </p>
             </div>
             <div className="col-lg-4 text-lg-end">
-              <a href="/book-visit" className="btn btn-light fw-semibold">
+              <a href="/book" className="btn btn-light fw-semibold" >
                 <i className="bi bi-calendar2-week me-2" />
                 Book a Farm Visit
               </a>
