@@ -9,8 +9,7 @@ import './App.css';
 import BookingWizard from './Pages/Booking/Booking';
 import AboutFarm from './Pages/About/About';
 import ProductsSection from './Pages/Product/Product';
-import ProductPage from './Pages/Product/ProductDetail';
-
+import ProductPage from './Pages/Product/ProductDetail'; // Updated import for ProductPage
 
 
 export default function App() {
@@ -21,7 +20,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path='/about' element={<AboutFarm/>} />
         <Route path="/activities" element={<Activities />} />
-        <Route path="/products" element={<ProductsSection />} />
+        <Route path="/products/:slug" element={<ProductsSection />} />
+        {/* <Route path="/products/:slug" element={<ProductDetail />} /> */}
         <Route path="/productPage/:slug" element={<ProductPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
