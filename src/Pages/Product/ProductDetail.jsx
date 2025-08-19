@@ -55,7 +55,9 @@ export default function ProductPage() {
                 </li>
               </ol>
             </nav>
+            
             <h1 className="display-6 fw-bold">{product.name}</h1>
+            <img src={product.heroImg} alt={product.name} className="mb-3" style={{ width: 60, height: 60 }} />
             <p className="lead">{product.short}</p>
           </div>
         </div>

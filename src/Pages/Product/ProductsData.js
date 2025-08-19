@@ -6,7 +6,7 @@ export const PRODUCTS = [
   {
     slug: "ghee",
     name: "Pure Cow Ghee",
-    heroImg: PLACE("Pure Cow Ghee"),
+    heroImg: '/assets/Ghee.png',
     short: "Traditional slow-cooked ghee made from our farm’s cow milk cream—rich aroma, natural granules, zero preservatives.",
     highlights: [
       "Rich in vitamins A, D, E, K",
@@ -40,7 +40,7 @@ export const PRODUCTS = [
   {
     slug: "milk",
     name: "Cow Milk",
-    heroImg: PLACE("Cow Milk"),
+    heroImg: '/assets/Milk.png',
     short: "Pure, fresh milk from grass-fed cows. Delivered quickly from our farm with complete transparency.",
     highlights: [
       "Fresh from our farm",
@@ -72,7 +72,7 @@ export const PRODUCTS = [
   {
     slug: "honey",
     name: "Raw Honey",
-    heroImg: PLACE("Raw Honey"),
+    heroImg: '/assets/Honey.png',
     short: "Unprocessed, raw honey from our on-farm hives—rich floral notes and natural goodness.",
     highlights: ["Unheated & unfiltered", "Floral varietal notes", "Bee-friendly practices"],
     variants: [
@@ -93,7 +93,7 @@ export const PRODUCTS = [
   {
     slug: "beeswax",
     name: "Bee Wax",
-    heroImg: PLACE("Bee Wax"),
+    heroImg: '/assets/Bee-wax.png',
     short: "Naturally harvested beeswax for candles, balms, and crafts—clean and aromatic.",
     highlights: ["Natural blocks and pellets", "Gently rendered", "Craft & cosmetic grade"],
     variants: [
@@ -113,7 +113,7 @@ export const PRODUCTS = [
   {
     slug: "eggs",
     name: "Farm Fresh Eggs",
-    heroImg: PLACE("Farm Fresh Eggs"),
+    heroImg: '/assets/Eggs.png',
     short: "Collected daily from free-range hens—naturally nutrient-dense and delicious.",
     highlights: ["Daily collection", "Cleaned & graded", "Great for baking & breakfast"],
     variants: [
