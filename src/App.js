@@ -7,6 +7,7 @@ import Activities from './Pages/Activities/Activities';
 import Contact from './Pages/Contact/Contact';
 import './App.css';
 import BookingWizard from './Pages/Booking/Booking';
+import AboutFarm from './Pages/About/About';
 
 
 
@@ -16,6 +17,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/about' element={<AboutFarm/>} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
