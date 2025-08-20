@@ -38,7 +38,7 @@ const Contact = () => {
 
         {/* Right Side - Contact Form */}
         <div className="col-md-6" data-aos="fade-left">
-          <h4 className="mb-3">Send us a Message</h4>
+          {/* <h4 className="mb-3">Send us a Message</h4> */}
           <form className="shadow p-4 rounded bg-light">
             <div className="mb-3">
               <label className="form-label">Name</label>
@@ -58,7 +58,7 @@ const Contact = () => {
                 required
               />
             </div>
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <label className="form-label">Email</label>
               <input
                 type="email"
@@ -66,7 +66,7 @@ const Contact = () => {
                 placeholder="Enter your email"
                 required
               />
-            </div>
+            </div> */}
             <div className="mb-3">
               <label className="form-label">Message</label>
               <textarea
