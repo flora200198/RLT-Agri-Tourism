@@ -477,7 +477,7 @@ export default function ActivityBooking() {
 
     // Activity-wise slots
     const activitySlots = {
-      farm: ["10:00 AM - 2:00 PM", "2:30 PM - 6:30 PM"],
+      farm: ["10:00 AM - 5:30 PM"],
       bday: ["10:00 AM - 2:00 PM", "3:00 PM - 7:00 PM"],
       swimming: [
         "10:00 AM - 12:00 PM",
@@ -507,8 +507,6 @@ export default function ActivityBooking() {
     return "available-date";
   }}
 />
-
-
               {/* Slots */}
               {date && availability[date] && (
                 <div className="mt-3">

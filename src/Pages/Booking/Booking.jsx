@@ -98,8 +98,9 @@ export default function BookingWizard() {
    <div className="container py-5">
   <div className="row">
     {/* LEFT SIDE – Stay Booking */}
+    <h2 className="fw-bold mb-4 text-center" >Book your slot</h2>
     <div className="col-lg-6 mb-4">
-      <h2 className="fw-bold mb-4 text-center">Book Your Farm Stay</h2>
+      <h3 className="fw-bold mb-4 text-center">With Stay</h3>
 
       {/* 3-step pill stepper */}
       <div className="d-flex justify-content-center mb-4 flex-wrap gap-2">
@@ -171,7 +172,7 @@ export default function BookingWizard() {
 
     {/* RIGHT SIDE – Activity Booking (without stay) */}
     <div className="col-lg-6 mb-4">
-      <h2 className="fw-bold mb-4 text-center">Book Activities Only</h2>
+      <h3 className="fw-bold mb-4 text-center">Without Stay</h3>
       <ActivityBooking />
     </div>
   </div>

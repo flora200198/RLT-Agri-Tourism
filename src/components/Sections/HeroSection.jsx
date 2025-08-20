@@ -203,7 +203,7 @@ const HeroSection = () => {
 
               <div className="d-flex gap-3 mt-3 flex-wrap">
                <Link to='/book' ><button variant="primary" className="btn btn-primary btn-lg" >Plan Your Visit</button> </Link> 
-                <button variant="outline-primary" className="btn btn-outline-light btn-lg product" >See Products</button>
+              <Link to='/products'><button  variant="outline-primary" className="btn btn-outline-light btn-lg product" >See Products</button></Link>
               </div>
             </div>
           </div>

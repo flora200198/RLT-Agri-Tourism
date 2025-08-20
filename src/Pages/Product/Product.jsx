@@ -6,11 +6,7 @@ import { Link, useParams } from "react-router-dom";
 
 
 const ProductsSection = () => {
-    // const { slug } = useParams();
-    // const product = useMemo(
-    //     () => PRODUCTS.find((p) => p.slug === slug),
-    //     [slug]
-    // );
+
     return (
         <section className="py-5 bg-light">
             <div className="container">
@@ -35,7 +31,13 @@ const ProductsSection = () => {
                                         src={p.heroImg}
                                         alt={p.name}
                                         className="card-img-top"
-                                        style={{ objectFit: "cover", height: "200px" }}
+                                        style={{
+                                            objectFit: "contain",   
+                                            height: "200px",       
+                                            width: "100%",         
+                                            backgroundColor: "#f8f9fa", 
+                                            padding: "1px"         
+                                        }}
                                     />
                                     <div className="card-body d-flex flex-column">
                                         <h5 className="card-title d-flex align-items-center">
@@ -54,7 +56,7 @@ const ProductsSection = () => {
                         </div>
                     ))}
                 </div>
-                {/* Optional: Testimonials placeholder */}
+
                 <div className="mt-5 text-center">
                     <h3 className="h5">💬 What Our Customers Say</h3>
                     <p className="text-muted">
