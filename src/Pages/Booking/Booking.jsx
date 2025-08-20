@@ -4,6 +4,7 @@ import { isValidEmail, isValidPhone } from "./Validators";
 import CalendarStep from "./Availability";
 import RoomsStep from "./RoomInfo";
 import CheckoutStep from "./Checkout";
+import ActivityBooking from "./ActivityBooking";
 
 export default function BookingWizard() {
   const [step, setStep] = useState(1);
@@ -94,7 +95,10 @@ export default function BookingWizard() {
   }
 
   return (
-    <section className="container py-5">
+   <div className="container py-5">
+  <div className="row">
+    {/* LEFT SIDE – Stay Booking */}
+    <div className="col-lg-6 mb-4">
       <h2 className="fw-bold mb-4 text-center">Book Your Farm Stay</h2>
 
       {/* 3-step pill stepper */}
@@ -104,14 +108,27 @@ export default function BookingWizard() {
           const active = step === n;
           const done = step > n;
           return (
-            <div key={label} className={`d-flex align-items-center px-3 py-2 rounded-pill ${active ? "bg-primary text-white" : done ? "bg-success text-white" : "bg-light"}`}>
+            <div
+              key={label}
+              className={`d-flex align-items-center px-3 py-2 rounded-pill ${
+                active
+                  ? "bg-primary text-white"
+                  : done
+                  ? "bg-success text-white"
+                  : "bg-light"
+              }`}
+            >
               <span className="fw-bold me-2">{n}</span> {label}
             </div>
           );
         })}
       </div>
 
-      {error && <div className="alert alert-danger" role="alert">{error}</div>}
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
 
       {step === 1 && (
         <CalendarStep
@@ -129,7 +146,7 @@ export default function BookingWizard() {
           selectedRoomId={selectedRoomId}
           onSelectRoom={setSelectedRoomId}
           onBack={() => setStep(1)}
-          onNext={() => setStep(3)} // go to Checkout (combined)
+          onNext={() => setStep(3)}
         />
       )}
 
@@ -150,6 +167,15 @@ export default function BookingWizard() {
           onReset={resetAll}
         />
       )}
-    </section>
+    </div>
+
+    {/* RIGHT SIDE – Activity Booking (without stay) */}
+    <div className="col-lg-6 mb-4">
+      <h2 className="fw-bold mb-4 text-center">Book Activities Only</h2>
+      <ActivityBooking />
+    </div>
+  </div>
+</div>
+
   );
 }
