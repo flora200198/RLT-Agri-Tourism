@@ -5,15 +5,15 @@ const AboutFarm = () => {
   // Replace these image URLs with your actual assets
   const IMAGES = {
     hero:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1280&auto=format&fit=crop", // trees/farm
+      "/assets/Farming.png", // trees/farm
     story:
-      "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200&auto=format&fit=crop", // soil/hand
+      "/assets/Soil.png", // soil/hand
     animals:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200&auto=format&fit=crop",
+      "/assets/FarmVisit.png", // animals/farm visit
     fishpond:
-      "https://images.unsplash.com/photo-1508186225823-0963cf9ab0de?q=80&w=1200&auto=format&fit=crop",
+      "/assets/Explore.png", // fish pond/school visit
     school:
-      "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1200&auto=format&fit=crop",
+      "/assets/SchoolVisit.png",
   };
 
   const stats = [
@@ -109,9 +109,9 @@ const AboutFarm = () => {
         />
         <div className="container position-absolute top-50 start-50 translate-middle">
           <div className="text-center">
-            <span className="badge bg-success-subtle text-success mb-3">
+            {/* <span className="badge bg-success-subtle text-success mb-3">
               🌿 About Us
-            </span>
+            </span> */}
             <h1 className="display-5 fw-bold">
               Benchmark Quality from the Crop to Cup
             </h1>
@@ -120,6 +120,22 @@ const AboutFarm = () => {
               biodiversity, and self-sustainability.
             </p>
           </div>
+        </div>
+      </section>
+
+       <section className="py-5 bg-light">
+        <div className="container">
+          <h2 className="h3 mb-3">🌿 Our Story</h2>
+          <p className="mb-3">
+            When the soil is alive, nature thrives. We grow nutrient-rich fodder,
+            care for animals ethically, and return organic matter to the land via
+            bio-digesters—powering equipment with methane and enriching fields
+            with natural slurry. Nothing goes to waste.
+          </p>
+          <p className="mb-0">
+            This circular approach sustains life, supports farmers, and ensures
+            safe, fresh food—all with transparency and accountability.
+          </p>
         </div>
       </section>
 
@@ -147,6 +163,45 @@ const AboutFarm = () => {
                 alt="Hands holding living soil"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-5 bg-light">
+        <div className="container">
+          <h2 className="h3 mb-4">🌍 Our Values</h2>
+          <div className="row g-4">
+            {values.map((v) => (
+              <div className="col-md-6 col-lg-3" key={v.title}>
+                <div className="card h-100 border-0 shadow-sm">
+                  <div className="card-body">
+                    <div className="d-flex align-items-center mb-2">
+                      <i className={`bi ${v.icon} fs-3 text-success me-2`} />
+                      <h5 className="card-title mb-0">{v.title}</h5>
+                    </div>
+                    <p className="card-text">{v.text}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-5">
+        <div className="container">
+          <h2 className="visually-hidden">Our Journey in Numbers</h2>
+          <div className="row g-4 text-center">
+            {stats.map((s) => (
+              <div className="col-6 col-md-3" key={s.label}>
+                <div className="p-4 rounded-4 border bg-white h-100 shadow-sm">
+                  <i className={`bi ${s.icon} fs-2 text-success d-block mb-2`} />
+                  <div className="h4 fw-bold mb-1">{s.value}</div>
+                  <div className="text-secondary small">{s.label}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -213,62 +268,13 @@ const AboutFarm = () => {
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-5 bg-light">
-        <div className="container">
-          <h2 className="h3 mb-4">🌍 Our Values</h2>
-          <div className="row g-4">
-            {values.map((v) => (
-              <div className="col-md-6 col-lg-3" key={v.title}>
-                <div className="card h-100 border-0 shadow-sm">
-                  <div className="card-body">
-                    <div className="d-flex align-items-center mb-2">
-                      <i className={`bi ${v.icon} fs-3 text-success me-2`} />
-                      <h5 className="card-title mb-0">{v.title}</h5>
-                    </div>
-                    <p className="card-text">{v.text}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Stats */}
-      <section className="py-5">
-        <div className="container">
-          <h2 className="visually-hidden">Our Journey in Numbers</h2>
-          <div className="row g-4 text-center">
-            {stats.map((s) => (
-              <div className="col-6 col-md-3" key={s.label}>
-                <div className="p-4 rounded-4 border bg-white h-100 shadow-sm">
-                  <i className={`bi ${s.icon} fs-2 text-success d-block mb-2`} />
-                  <div className="h4 fw-bold mb-1">{s.value}</div>
-                  <div className="text-secondary small">{s.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Story / Circular economy */}
-      <section className="py-5 bg-light">
-        <div className="container">
-          <h2 className="h3 mb-3">🌿 Our Story</h2>
-          <p className="mb-3">
-            When the soil is alive, nature thrives. We grow nutrient-rich fodder,
-            care for animals ethically, and return organic matter to the land via
-            bio-digesters—powering equipment with methane and enriching fields
-            with natural slurry. Nothing goes to waste.
-          </p>
-          <p className="mb-0">
-            This circular approach sustains life, supports farmers, and ensures
-            safe, fresh food—all with transparency and accountability.
-          </p>
-        </div>
-      </section>
+     
 
       {/* Leadership */}
       <section className="py-5">
