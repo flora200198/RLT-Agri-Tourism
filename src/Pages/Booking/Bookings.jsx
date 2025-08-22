@@ -1,235 +1,607 @@
-// BookingForm.jsx
-import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const activitySlots = {
-  farm: ["10:00 AM - 5:30 PM"],
-  bday: ["10:00 AM - 2:00 PM", "3:00 PM - 7:00 PM"],
-  swimming: ["10:00 AM - 12:00 PM", "12:00 PM - 2:00 PM", "2:00 PM - 4:00 PM", "4:00 PM - 6:00 PM"],
-  avroom: ["9:00 AM - 1:00 PM", "2:00 PM - 6:00 PM"],
-};
+const BookingPage = () => {
+  const [selectedType, setSelectedType] = useState('');
+  const [showPayment, setShowPayment] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const location = useLocation();
 
-const staySlot = ["Check-in 12:00 PM - Check-out 11:00 AM"];
-const MAX_PERSONS_PER_ROOM = 3;
-const rooms = [
-  { name: "Deluxe Room", sleeps: 3, price: 7000, image: "/assets/FarmHouse.png" },
-];
-
-const BookingForm = () => {
-  const query = new URLSearchParams(useLocation().search);
-  const type = query.get("type"); // adventure or stay
-  const selectedOption = query.get("option") || ""; // Adventures / Adventures with Stay
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    activity: "",
-    slot: "",
-    adults: 1,
-    kids: 0,
-    infants: 0,
-    roomCount: 1,
-    paymentMethod: "upi",
-    upi: "",
-    cardNo: "",
-    expiry: "",
-    cvv: "",
-  });
-
-  const [holdId, setHoldId] = useState(null);
-  const [busy, setBusy] = useState(false);
-  const [confirmRes, setConfirmRes] = useState(null);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // Auto-adjust room count if stay selected or "with stay"
-  useEffect(() => {
-    const totalGuests = Number(formData.adults) + Number(formData.kids);
-    const roomsNeeded = Math.ceil(totalGuests / MAX_PERSONS_PER_ROOM) || 1;
-    if (type === "stay" || selectedOption === "Adventures with Stay") {
-      setFormData((prev) => ({ ...prev, roomCount: roomsNeeded }));
+  // Pricing configuration
+  const pricing = {
+    adventure: {
+      farm: 1500,
+      bday: 2500,
+      swimming: 2000,
+      avroom: 3000
+    },
+    stay: {
+      basePrice: 7000,
+      personLimit: 3,
+      additionalPersonCharge: 1500
     }
-  }, [formData.adults, formData.kids, type, selectedOption]);
-
-  const onCreateHold = () => {
-    setBusy(true);
-    setTimeout(() => {
-      setHoldId("HOLD12345");
-      setBusy(false);
-    }, 1000);
   };
 
-  const onConfirm = () => {
-    setBusy(true);
-    setTimeout(() => {
-      setConfirmRes({ code: "BOOK12345" });
-      setBusy(false);
-    }, 1000);
+  useEffect(() => {
+    const typeFromStorage = localStorage.getItem('selectedBookingType');
+    const typeFromState = location.state?.type;
+    setSelectedType(typeFromState || typeFromStorage || '');
+    localStorage.removeItem('selectedBookingType');
+  }, [location.state]);
+
+  // Calculate total for stay booking
+  const calculateStayTotal = (details) => {
+    const basePrice = pricing.stay.basePrice;
+    const totalPersons = parseInt(details.adults) + parseInt(details.children);
+    const roomsNeeded = Math.ceil(totalPersons / pricing.stay.personLimit);
+    const additionalPersonCost = Math.max(0, totalPersons - (pricing.stay.personLimit * roomsNeeded)) * pricing.stay.additionalPersonCharge;
+    
+    return {
+      basePrice: basePrice * roomsNeeded,
+      additionalPersonCost,
+      total: (basePrice * roomsNeeded) + additionalPersonCost,
+      roomsNeeded,
+      totalPersons
+    };
   };
 
-  const totalPersons = Number(formData.adults) + Number(formData.kids);
-  const maxExceeded = totalPersons > MAX_PERSONS_PER_ROOM * formData.roomCount;
+  const handleBookingSubmit = (details, type) => {
+    setBookingDetails({ ...details, type });
+    setShowPayment(true);
+  };
 
-  return (
-    <div className="container py-5">
-      <h2 className="mb-4">Booking: {selectedOption}</h2>
+  const handlePaymentSubmit = (paymentData) => {
+    setBookingConfirmed(true);
+    setShowPayment(false);
+  };
 
-      <form className="p-4 border rounded shadow-sm bg-light">
-        {/* Adventure selection */}
-        {type === "adventure" && (
-          <div className="mb-3">
-            <label className="form-label">Select Activity</label>
-            <select
-              name="activity"
-              value={formData.activity}
-              onChange={handleChange}
-              className="form-select"
-              required
-            >
-              <option value="">-- Select --</option>
-              <option value="farm">One Day Farm Visit</option>
-              <option value="bday">Birthday Party (4 hrs)</option>
-              <option value="swimming">Swimming Pool with Food (2 hrs)</option>
-              <option value="avroom">AV Room with Food (4 hrs)</option>
-            </select>
-          </div>
-        )}
+  const getActivityName = (activityCode) => {
+    const activities = {
+      farm: "One Day Farm Visit",
+      bday: "Birthday Party (4 hrs)",
+      swimming: "Swimming Pool with Food (2 hrs)",
+      avroom: "AV Room with Food (4 hrs)"
+    };
+    return activities[activityCode] || activityCode;
+  };
 
-        {/* Guest info */}
-        <div className="row mb-3">
-          <div className="col-md-4">
-            <label className="form-label">Adults</label>
-            <input
-              type="number"
-              name="adults"
-              min="0"
-              value={formData.adults}
-              onChange={handleChange}
-              className="form-control"
-            />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">Kids</label>
-            <input
-              type="number"
-              name="kids"
-              min="0"
-              value={formData.kids}
-              onChange={handleChange}
-              className="form-control"
-            />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">Infants</label>
-            <input
-              type="number"
-              name="infants"
-              min="0"
-              value={formData.infants}
-              onChange={handleChange}
-              className="form-control"
-            />
-          </div>
-        </div>
+  // Payment Methods Component
+  const PaymentMethods = () => {
+    const [paymentData, setPaymentData] = useState({
+      upiId: '',
+      cardNumber: '',
+      expiryDate: '',
+      cvv: '',
+      cardHolder: '',
+      email: '',
+      phone: ''
+    });
 
-        {/* Room details if stay or adventure with stay */}
-        {(type === "stay" || selectedOption === "Adventures with Stay") && (
-          <div className="mb-3">
-            <label className="form-label">Room Count</label>
-            <input
-              type="number"
-              name="roomCount"
-              value={formData.roomCount}
-              readOnly
-              className="form-control"
-            />
-            {maxExceeded && (
-              <div className="text-danger mt-1">
-                Guest count exceeds room capacity!
-              </div>
-            )}
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      handlePaymentSubmit(paymentData);
+    };
 
-            {rooms.map((r, i) => (
-              <div className="d-flex align-items-center mt-2" key={i}>
-                <img
-                  src={r.image}
-                  alt={r.name}
-                  style={{ width: "100px", borderRadius: "8px", marginRight: "15px" }}
-                />
-                <div>
-                  <strong>{r.name}</strong> - Sleeps {r.sleeps} - ₹{r.price}
+    const renderPaymentForm = () => {
+      switch(selectedPaymentMethod) {
+        case 'upi':
+          return (
+            <div className="mb-4">
+              <label className="form-label">UPI ID *</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="yourname@upi"
+                value={paymentData.upiId}
+                onChange={(e) => setPaymentData({...paymentData, upiId: e.target.value})}
+                required
+              />
+              <div className="form-text">Enter your UPI ID (e.g., name@ybl, name@okicici)</div>
+            </div>
+          );
+        
+        case 'creditcard':
+        case 'debitcard':
+          return (
+            <>
+              <div className="row">
+                <div className="col-md-8 mb-3">
+                  <label className="form-label">Card Number *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="1234 5678 9012 3456"
+                    value={paymentData.cardNumber}
+                    onChange={(e) => setPaymentData({...paymentData, cardNumber: e.target.value})}
+                    required
+                  />
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">CVV *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="123"
+                    value={paymentData.cvv}
+                    onChange={(e) => setPaymentData({...paymentData, cvv: e.target.value})}
+                    required
+                  />
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Slot selection */}
-        <div className="mb-3">
-          <label className="form-label">Select Slot</label>
-          <select
-            name="slot"
-            value={formData.slot}
-            onChange={handleChange}
-            className="form-select"
-            required
-          >
-            <option value="">-- Select Slot --</option>
-            {type === "stay" || selectedOption === "Adventures with Stay"
-              ? staySlot.map((s, i) => <option key={i} value={s}>{s}</option>)
-              : activitySlots[formData.activity]?.map((s, i) => <option key={i} value={s}>{s}</option>)}
-          </select>
-        </div>
-
-        {/* Payment section */}
-        <div className="border rounded-3 p-3 mb-3">
-          <h6>Payment</h6>
-          <div className="mb-2">
-            <div className="form-check form-check-inline">
-              <input type="radio" name="paymentMethod" value="upi" checked={formData.paymentMethod==="upi"} onChange={handleChange} className="form-check-input" />
-              <label className="form-check-label">UPI</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input type="radio" name="paymentMethod" value="card" checked={formData.paymentMethod==="card"} onChange={handleChange} className="form-check-input" />
-              <label className="form-check-label">Credit Card</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input type="radio" name="paymentMethod" value="debit" checked={formData.paymentMethod==="debit"} onChange={handleChange} className="form-check-input" />
-              <label className="form-check-label">Debit Card</label>
-            </div>
-          </div>
-
-          {formData.paymentMethod==="upi" && <input type="text" name="upi" placeholder="name@bank" value={formData.upi} onChange={handleChange} className="form-control mb-2" />}
-          {(formData.paymentMethod==="card" || formData.paymentMethod==="debit") && (
-            <>
-              <input type="text" name="cardNo" placeholder="Card Number" value={formData.cardNo} onChange={handleChange} className="form-control mb-2" />
-              <input type="text" name="expiry" placeholder="MM/YY" value={formData.expiry} onChange={handleChange} className="form-control mb-2" />
-              <input type="password" name="cvv" placeholder="CVV" value={formData.cvv} onChange={handleChange} className="form-control mb-2" />
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label className="form-label">Expiry Date *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="MM/YY"
+                    value={paymentData.expiryDate}
+                    onChange={(e) => setPaymentData({...paymentData, expiryDate: e.target.value})}
+                    required
+                  />
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className="form-label">Card Holder Name *</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="John Doe"
+                    value={paymentData.cardHolder}
+                    onChange={(e) => setPaymentData({...paymentData, cardHolder: e.target.value})}
+                    required
+                  />
+                </div>
+              </div>
             </>
+          );
+        
+        default:
+          return null;
+      }
+    };
+
+    return (
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div className="card shadow">
+              <div className="card-header bg-warning text-dark">
+                <h3 className="mb-0">Payment Details</h3>
+              </div>
+              <div className="card-body">
+                <div className="alert alert-success mb-4">
+                  <h5>Booking Summary (Confirmed)</h5>
+                  <p><strong>Total Amount: ₹{bookingDetails.total}</strong></p>
+                  {bookingDetails.type === 'stay' && (
+                    <>
+                      <p>Room Type: {bookingDetails.roomType}</p>
+                      <p>Rooms: {bookingDetails.roomsNeeded}</p>
+                      <p>Adults: {bookingDetails.adults}</p>
+                      <p>Children: {bookingDetails.children}</p>
+                      <p>Check-in: {bookingDetails.checkInDate}</p>
+                      <p>Check-out: {bookingDetails.checkOutDate}</p>
+                    </>
+                  )}
+                  {bookingDetails.type === 'adventure' && (
+                    <>
+                      <p>Activity: {getActivityName(bookingDetails.activity)}</p>
+                      <p>Guests: {bookingDetails.numGuests}</p>
+                      <p>Date: {bookingDetails.date}</p>
+                      <p>Time: {bookingDetails.time}</p>
+                    </>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label className="form-label fw-bold">Select Payment Method *</label>
+                  <div className="row g-3">
+                    <div className="col-md-4">
+                      <div 
+                        className={`card payment-method-card ${selectedPaymentMethod === 'upi' ? 'border-primary' : ''}`}
+                        onClick={() => setSelectedPaymentMethod('upi')}
+                        style={{cursor: 'pointer'}}
+                      >
+                        <div className="card-body text-center">
+                          <i className="fas fa-mobile-alt fa-2x mb-2"></i>
+                          <h6>UPI</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div 
+                        className={`card payment-method-card ${selectedPaymentMethod === 'creditcard' ? 'border-primary' : ''}`}
+                        onClick={() => setSelectedPaymentMethod('creditcard')}
+                        style={{cursor: 'pointer'}}
+                      >
+                        <div className="card-body text-center">
+                          <i className="fas fa-credit-card fa-2x mb-2"></i>
+                          <h6>Credit Card</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div 
+                        className={`card payment-method-card ${selectedPaymentMethod === 'debitcard' ? 'border-primary' : ''}`}
+                        onClick={() => setSelectedPaymentMethod('debitcard')}
+                        style={{cursor: 'pointer'}}
+                      >
+                        <div className="card-body text-center">
+                          <i className="fas fa-credit-card fa-2x mb-2"></i>
+                          <h6>Debit Card</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {selectedPaymentMethod && (
+                  <form onSubmit={handleSubmit}>
+                    {renderPaymentForm()}
+                    
+                    <div className="row">
+                      <div className="col-md-6 mb-3">
+                        <label className="form-label">Email *</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="john@example.com"
+                          value={paymentData.email}
+                          onChange={(e) => setPaymentData({...paymentData, email: e.target.value})}
+                          required
+                        />
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <label className="form-label">Phone Number *</label>
+                        <input
+                          type="tel"
+                          className="form-control"
+                          placeholder="+91 1234567890"
+                          value={paymentData.phone}
+                          onChange={(e) => setPaymentData({...paymentData, phone: e.target.value})}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="d-grid gap-2">
+                      <button 
+                        type="submit" 
+                        className="btn btn-success btn-lg"
+                        disabled={!selectedPaymentMethod}
+                      >
+                        Confirm Payment of ₹{bookingDetails.total}
+                      </button>
+                      <button 
+                        type="button" 
+                        className="btn btn-outline-secondary"
+                        onClick={() => setShowPayment(false)}
+                      >
+                        Back to Booking
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Confirmation Component
+  const ConfirmationPage = () => {
+    return (
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div className="card shadow border-success">
+              <div className="card-header bg-success text-white">
+                <h3 className="mb-0">🎉 Booking Confirmed!</h3>
+              </div>
+              <div className="card-body text-center">
+                <div className="mb-4">
+                  <i className="fas fa-check-circle fa-5x text-success mb-3"></i>
+                  <h4>Thank you for your booking!</h4>
+                  <p className="text-muted">Your payment has been processed successfully.</p>
+                </div>
+
+                <div className="alert alert-info text-start">
+                  <h5>Booking Details</h5>
+                  <p><strong>Booking Reference:</strong> #BK{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                  <p><strong>Total Paid:</strong> ₹{bookingDetails.total}</p>
+                  <p><strong>Payment Method:</strong> {selectedPaymentMethod.toUpperCase()}</p>
+                  
+                  {bookingDetails.type === 'stay' && (
+                    <>
+                      <p><strong>Room Type:</strong> {bookingDetails.roomType}</p>
+                      <p><strong>Rooms:</strong> {bookingDetails.roomsNeeded}</p>
+                      <p><strong>Guests:</strong> {bookingDetails.totalPersons} ({bookingDetails.adults} adults, {bookingDetails.children} children)</p>
+                      <p><strong>Check-in:</strong> {bookingDetails.checkInDate}</p>
+                      <p><strong>Check-out:</strong> {bookingDetails.checkOutDate}</p>
+                    </>
+                  )}
+                  
+                  {bookingDetails.type === 'adventure' && (
+                    <>
+                      <p><strong>Activity:</strong> {getActivityName(bookingDetails.activity)}</p>
+                      <p><strong>Guests:</strong> {bookingDetails.numGuests}</p>
+                      <p><strong>Date:</strong> {bookingDetails.date}</p>
+                      <p><strong>Time:</strong> {bookingDetails.time}</p>
+                    </>
+                  )}
+                </div>
+
+                <div className="alert alert-warning">
+                  <h6>📋 Important Information</h6>
+                  <ul className="mb-0">
+                    <li>Booking details cannot be modified after confirmation</li>
+                    <li>Please bring valid ID proof during check-in</li>
+                    <li>Cancellation policy: 48 hours notice required for full refund</li>
+                    <li>Confirmation email has been sent to your registered email</li>
+                  </ul>
+                </div>
+
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => window.location.reload()}
+                >
+                  Make Another Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Adventure Form Component
+  const AdventureForm = () => {
+    const [formData, setFormData] = useState({
+      activity: '',
+      numGuests: 1,
+      date: '',
+      time: ''
+    });
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const total = pricing.adventure[formData.activity] * formData.numGuests;
+      handleBookingSubmit({ ...formData, total }, 'adventure');
+    };
+
+    const getActivityPrice = () => {
+      return formData.activity ? pricing.adventure[formData.activity] : 0;
+    };
+
+    return (
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div className="card shadow">
+              <div className="card-header bg-primary text-white">
+                <h3 className="mb-0">Adventure Booking</h3>
+              </div>
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Select Activity *</label>
+                      <select 
+                        className="form-select" 
+                        value={formData.activity} 
+                        onChange={(e) => setFormData({...formData, activity: e.target.value})}
+                        required
+                      >
+                        <option value="">-- Select Activity --</option>
+                        <option value="farm">One Day Farm Visit (₹1500)</option>
+                        <option value="bday">Birthday Party (₹2500)</option>
+                        <option value="swimming">Swimming Pool with Food (₹2000)</option>
+                        <option value="avroom">AV Room with Food (₹3000)</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Number of Guests *</label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        min="1"
+                        max="20"
+                        value={formData.numGuests}
+                        onChange={(e) => setFormData({...formData, numGuests: parseInt(e.target.value)})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Date *</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={formData.date}
+                        onChange={(e) => setFormData({...formData, date: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Time *</label>
+                      <input
+                        type="time"
+                        className="form-control"
+                        value={formData.time}
+                        onChange={(e) => setFormData({...formData, time: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  {formData.activity && (
+                    <div className="alert alert-info">
+                      <strong>Price Breakdown:</strong><br/>
+                      {formData.numGuests} guest(s) × ₹{getActivityPrice()} = ₹{getActivityPrice() * formData.numGuests}
+                    </div>
+                  )}
+                  <button type="submit" className="btn btn-primary w-100">
+                    Proceed to Payment
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Stay Form Component
+  const StayForm = () => {
+    const [formData, setFormData] = useState({
+      roomType: '',
+      checkInDate: '',
+      checkOutDate: '',
+      adults: 1,
+      children: 0
+    });
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const calculation = calculateStayTotal(formData);
+      handleBookingSubmit({ ...formData, ...calculation }, 'stay');
+    };
+
+    const calculation = calculateStayTotal(formData);
+    const totalPersons = parseInt(formData.adults) + parseInt(formData.children);
+
+    return (
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <div className="card shadow">
+              <div className="card-header bg-success text-white">
+                <h3 className="mb-0">Room Booking (Max {pricing.stay.personLimit} persons per room)</h3>
+              </div>
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Room Type *</label>
+                      <select 
+                        className="form-select" 
+                        value={formData.roomType} 
+                        onChange={(e) => setFormData({...formData, roomType: e.target.value})}
+                        required
+                      >
+                        <option value="">-- Select Room Type --</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="suite">Suite</option>
+                        <option value="family">Family Room</option>
+                        <option value="villa">Private Villa</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Total Persons: {totalPersons}</label>
+                      <div className="row">
+                        <div className="col-6">
+                          <label className="form-label">Adults *</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            min="1"
+                            max="10"
+                            value={formData.adults}
+                            onChange={(e) => setFormData({...formData, adults: parseInt(e.target.value)})}
+                            required
+                          />
+                        </div>
+                        <div className="col-6">
+                          <label className="form-label">Children</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            min="0"
+                            max="10"
+                            value={formData.children}
+                            onChange={(e) => setFormData({...formData, children: parseInt(e.target.value)})}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Check-in Date *</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={formData.checkInDate}
+                        onChange={(e) => setFormData({...formData, checkInDate: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Check-out Date *</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        value={formData.checkOutDate}
+                        onChange={(e) => setFormData({...formData, checkOutDate: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  {totalPersons > 0 && (
+                    <div className="alert alert-info">
+                      <strong>Price Calculation:</strong><br/>
+                      - Rooms Required: {calculation.roomsNeeded} × ₹{pricing.stay.basePrice} = ₹{calculation.basePrice}<br/>
+                      {calculation.additionalPersonCost > 0 && (
+                        <>- Additional Person Charge: ₹{calculation.additionalPersonCost}<br/></>
+                      )}
+                      - <strong>Grand Total: ₹{calculation.total}</strong>
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit" 
+                    className="btn btn-success w-100"
+                    disabled={totalPersons === 0}
+                  >
+                    Proceed to Payment
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {bookingConfirmed ? (
+        <ConfirmationPage />
+      ) : showPayment ? (
+        <PaymentMethods />
+      ) : (
+        <>
+          {selectedType === 'adventure' && <AdventureForm />}
+          {selectedType === 'stay' && <StayForm />}
+          {!selectedType && (
+            <div className="container mt-5 text-center">
+              <div className="alert alert-info">
+                <h4>Please select a booking option from the navigation menu</h4>
+                <p>Go back and choose either "Adventures" or "Adventures with Stay"</p>
+              </div>
+            </div>
           )}
-        </div>
-
-        <div className="d-flex gap-2">
-          <button type="button" className="btn btn-primary" disabled={busy || holdId} onClick={onCreateHold}>
-            {busy ? "Saving…" : holdId ? "Saved" : "Save & Enable Payment"}
-          </button>
-          <button type="button" className="btn btn-success" disabled={!holdId || busy || maxExceeded} onClick={onConfirm}>
-            {busy ? "Processing…" : "Pay & Confirm"}
-          </button>
-        </div>
-      </form>
-
-      {confirmRes && (
-        <div className="alert alert-success mt-3">
-          <h5>Booking Confirmed 🎉</h5>
-          <div><strong>Reference:</strong> {confirmRes.code}</div>
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 
-export default BookingForm;
+export default BookingPage;
