@@ -1,0 +1,22 @@
+/* 🔹 Remove click/focus blue color only inside the grid dropdown */
+.custom-grid-dropdown .dropdown-item:focus,
+.custom-grid-dropdown .dropdown-item:active,
+.custom-grid-dropdown .dropdown-item.active {
+  background-color: transparent !important;
+  color: inherit !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 🔹 Add a nice hover effect so users know it's clickable */
+.custom-grid-dropdown .dropdown-item:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.custom-grid-dropdown .dropdown-item:hover span {
+  color: #007bff; /* Bootstrap primary color, or change to your brand color */
+  transition: color 0.3s ease;
+}

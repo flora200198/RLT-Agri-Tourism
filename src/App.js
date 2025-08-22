@@ -10,7 +10,7 @@ import BookingWizard from './Pages/Booking/Booking';
 import AboutFarm from './Pages/About/About';
 import ProductsSection from './Pages/Product/Product';
 import ProductPage from './Pages/Product/ProductDetail'; // Updated import for ProductPage
-
+import BookingForm from './Pages/Booking/Bookings';
 
 export default function App() {
   return (
@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/productPage/:slug" element={<ProductPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path='/book' element={< BookingWizard />} />
+        <Route path='/book' element={< BookingForm />} />
       </Routes>
       <Footer />
     </>
