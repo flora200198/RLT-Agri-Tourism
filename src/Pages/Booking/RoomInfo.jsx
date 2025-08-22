@@ -1,12 +1,40 @@
 import React, { useState } from "react";
+import CheckoutStep from "./Checkout";
 
-const RoomSelection = () => {
+const RoomSelection = (onNext) => {
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [guest, setGuest] = useState({ name: "", email: "", phone: "" });
+  const [payment, setPayment] = useState({ method: "upi", upi: "", cardNo: "", expiry: "", cvv: "" });
+  const [holdId, setHoldId] = useState(null);
+  const [confirmRes, setConfirmRes] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("2025-08-24"); // or from props
+  const [selectedRooms, setSelectedRooms] = useState([]);
+
+  
+const isConfirmed = !!confirmRes;
+  const handleCreateHold = () => {
+    const holdId = "HOLD123"; // example
+    setHoldId(holdId);
+  };
+
+  const handleConfirmPayment = () => {
+    const res = { code: "BOOK123" };
+    setConfirmRes(res);
+  };
+
+  const handleReset = () => {
+    setShowCheckout(false);
+    setSelectedRooms([]);
+    setGuest({ name: "", email: "", phone: "" });
+    setPayment({ method: "upi", upi: "", cardNo: "", expiry: "", cvv: "" });
+    setHoldId(null);
+    setConfirmRes(null);
+  };
+
   const rooms = [
     { name: "Deluxe Room", sleeps: 3, price: 7000, Stay: '/assets/FarmHouse.png' },
-    // { name: "Suite", sleeps: 3, price: 7000, Stay: '/assets/FarmHouse1.png' },
   ];
-
-  const [selectedRooms, setSelectedRooms] = useState([]);
 
   // Select/deselect room
   const handleSelect = (roomName) => {
@@ -18,6 +46,10 @@ const RoomSelection = () => {
         { name: roomName, adults: 1, kids: 0, infants: 0, rooms: 1 },
       ]);
     }
+  };
+
+  const handleContinue = () => {
+    setShowCheckout(true);
   };
 
   // Update guest count
@@ -64,21 +96,23 @@ const RoomSelection = () => {
     );
   };
 
+  // ✅ Calculate totalPrice for the first selected room (outside map)
+  const selectedRoom = selectedRooms[0];
+  const totalPrice = selectedRoom ? selectedRoom.rooms * selectedRoom.price : 0;
+
   return (
     <div className="container mt-4">
       <h4>
-        Available Rooms on <span className="text-primary">2025-08-22</span>
+        Available Rooms on <span className="text-primary">{selectedDate}</span>
       </h4>
 
       {rooms.map((room, index) => {
         const selected = selectedRooms.find((r) => r.name === room.name);
-        const totalPrice = selected ? room.price * selected.rooms : 0;
+        const roomTotalPrice = selected ? room.price * selected.rooms : 0;
 
         return (
           <div key={index} className="card p-3 mb-3 shadow-sm">
-            {/* First Row: Room Info + Amenities */}
             <div className="d-flex justify-content-between align-items-start">
-              {/* Left: Image + Room Details */}
               <div style={{ maxWidth: "50%" }}>
                 <img
                   src={room.Stay}
@@ -92,7 +126,6 @@ const RoomSelection = () => {
                 </p>
               </div>
 
-              {/* Right: Amenities + Select button */}
               <div
                 style={{ maxWidth: "45%" }}
                 className="d-flex flex-column justify-content-between"
@@ -115,100 +148,127 @@ const RoomSelection = () => {
               </div>
             </div>
 
-            {/* Second Row: Guest + Room Counters (only after selection) */}
             {selected && (
-              <div className="mt-1">
-                <div className="d-flex flex-column align-items-end gap-1">
-                  {/* Rooms */}
-                  <div className="d-flex align-items-center gap-2">
-                    <label className="mb-0">Rooms:</label>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateRoomCount(room.name, -1)}
-                      disabled={selected.rooms <= 1}
-                    >
-                      -
-                    </button>
-                    <span>{selected.rooms}</span>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateRoomCount(room.name, 1)}
-                    >
-                      +
-                    </button>
-                  </div>
+      <div className="mt-1">
+        <div className="d-flex flex-column align-items-end gap-1">
+          {/* Rooms */}
+          <div className="d-flex align-items-center gap-2">
+            <label className="mb-0">Rooms:</label>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateRoomCount(room.name, -1)}
+              disabled={selected.rooms <= 1 || isConfirmed} // disable if confirmed
+            >
+              -
+            </button>
+            <span>{selected.rooms}</span>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateRoomCount(room.name, 1)}
+              disabled={isConfirmed} // disable if confirmed
+            >
+              +
+            </button>
+          </div>
 
-                  {/* Adults */}
-                  <div className="d-flex align-items-center gap-2">
-                    <label className="mb-0">Adults:</label>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "adults", -1)}
-                      disabled={selected.adults <= 1}
-                    >
-                      -
-                    </button>
-                    <span>{selected.adults}</span>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "adults", 1)}
-                    >
-                      +
-                    </button>
-                  </div>
+          {/* Adults */}
+          <div className="d-flex align-items-center gap-2">
+            <label className="mb-0">Adults:</label>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "adults", -1)}
+              disabled={selected.adults <= 1 || isConfirmed} // disable if confirmed
+            >
+              -
+            </button>
+            <span>{selected.adults}</span>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "adults", 1)}
+              disabled={isConfirmed} // disable if confirmed
+            >
+              +
+            </button>
+          </div>
 
-                  {/* Kids */}
-                  <div className="d-flex align-items-center gap-2">
-                    <label className="mb-0">Kids:</label>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "kids", -1)}
-                      disabled={selected.kids <= 0}
-                    >
-                      -
-                    </button>
-                    <span>{selected.kids}</span>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "kids", 1)}
-                    >
-                      +
-                    </button>
-                  </div>
+          {/* Kids */}
+          <div className="d-flex align-items-center gap-2">
+            <label className="mb-0">Kids:</label>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "kids", -1)}
+              disabled={selected.kids <= 0 || isConfirmed} // disable if confirmed
+            >
+              -
+            </button>
+            <span>{selected.kids}</span>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "kids", 1)}
+              disabled={isConfirmed} // disable if confirmed
+            >
+              +
+            </button>
+          </div>
 
-                  {/* Infants */}
-                  <div className="d-flex align-items-center gap-2">
-                    <label className="mb-0">Infants:</label>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "infants", -1)}
-                      disabled={selected.infants <= 0}
-                    >
-                      -
-                    </button>
-                    <span>{selected.infants}</span>
-                    <button
-                      className="btn btn-sm btn-outline-secondary"
-                      onClick={() => updateGuestCount(room.name, "infants", 1)}
-                    >
-                      +
-                    </button>
-                  </div>
+          {/* Infants */}
+          <div className="d-flex align-items-center gap-2">
+            <label className="mb-0">Infants:</label>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "infants", -1)}
+              disabled={selected.infants <= 0 || isConfirmed} // disable if confirmed
+            >
+              -
+            </button>
+            <span>{selected.infants}</span>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => updateGuestCount(room.name, "infants", 1)}
+              disabled={isConfirmed} // disable if confirmed
+            >
+              +
+            </button>
+          </div>
 
-                  {/* Total Price */}
-                  <div className="mt-2">
-                    <strong>Total Price:</strong> ₹{totalPrice.toLocaleString()}
-                  </div>
-                </div>
-              </div>
-            )}
+          {/* Total Price */}
+          <div className="mt-2">
+            <strong>Total Price:</strong> ₹{totalPrice.toLocaleString()}
+          </div>
+        </div>
+      </div>
+    )}
+
           </div>
         );
       })}
 
-      <button className="btn btn-primary" disabled={selectedRooms.length === 0} >
+      <button
+        className="btn btn-primary"
+        onClick={handleContinue}
+        disabled={selectedRooms.length === 0}
+      >
         Continue
       </button>
+
+      {showCheckout && selectedRoom && (
+        <CheckoutStep
+          date={selectedDate}
+          room={selectedRoom}
+          guest={guest}
+          setGuest={setGuest}
+          payment={payment}
+          setPayment={setPayment}
+          holdId={holdId}
+          onCreateHold={handleCreateHold}
+          onConfirm={handleConfirmPayment}
+          confirmRes={confirmRes}
+          busy={busy}
+          onBack={() => setShowCheckout(false)}
+          onReset={handleReset}
+          totalPrice={totalPrice} // ✅ fixed
+        />
+      )}
     </div>
   );
 };

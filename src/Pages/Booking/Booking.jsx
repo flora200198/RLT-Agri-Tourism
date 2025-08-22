@@ -12,7 +12,6 @@ const BookingPage = () => {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
-  const [selectedRoomId, setSelectedRoomId] = useState(null);
   const [otpVerified, setOtpVerified] = useState(false); // Only show booking after verification
 
   const sendOtp = () => {

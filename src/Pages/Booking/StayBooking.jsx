@@ -33,6 +33,9 @@ const StayBooking = ({ error }) => {
     const handleCreateHold = () => {
         setHoldId("HOLD123");
     };
+    const goToCheckout = () => {
+  setStep(3); // move from RoomSelection to CheckoutStep
+};
 
     const handleConfirm = () => {
         setConfirmRes("Booking Confirmed ✅");
@@ -75,7 +78,7 @@ const StayBooking = ({ error }) => {
                 />
             )}
 
-            {step === 3 && (
+            {/* {step === 3 && (
                 <CheckoutStep
                     date={date}
                     room={selectedRoomId}
@@ -91,7 +94,7 @@ const StayBooking = ({ error }) => {
                     onBack={() => setStep(2)}
                     onReset={resetAll}
                 />
-            )}
+            )} */}
         </div>
     );
 };
