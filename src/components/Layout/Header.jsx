@@ -1,8 +1,32 @@
 import React from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 
 const Header = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+  const navItems = [
+    { label: "Explore nature with Us",
+    options: [
+      { label: "Adventures", link: "/book" },
+      { label: "Adventures with saty", link: "/book" },
+    ], },
+    { label: "Products", options: [
+  { label: "Cow Milk", link: "/ProductPage/milk" },
+  { label: "Eggs", link: "/ProductPage/eggs" },
+  { label: "Chicken", link: "/ProductPage/chicken" },
+  { label: "Duck", link: "/ProductPage/duck" },
+  { label: "Honey", link: "/ProductPage/honey" },
+  { label: "Honey wax", link: "/ProductPage/beeswax" },
+  { label: "Ghee", link: "/ProductPage/ghee" },
+  { label: "Amla", link: "/ProductPage/amla" },
+  { label: "Guava", link: "/ProductPage/guava" },
+  { label: "Lemon", link: "/ProductPage/lemon" },
+  { label: "Seasonal Fruits", link: "/ProductPage/fruits" },
+  // { label: "Coconut", link: "/ProductPage/coconut" },
+], },
+  ];
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -35,44 +59,32 @@ const Header = () => {
               <NavLink className="nav-link" to="/activities">Activities</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/book">Farm Visit</NavLink>
-            </li>
-
-            <li>
               <NavLink className="nav-link" to="/products">Farm Fresh</NavLink>
             </li>
-
-            {/* Products dropdown */}
-            <li className="nav-item dropdown">
-              {/* Use a plain <a> or <button> for Bootstrap dropdown toggler */}
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                id="productsDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                onClick={(e) => e.preventDefault()}
+            {navItems.map((item, index) => (
+              <li
+                key={index}
+                className="nav-item dropdown"
+                onMouseEnter={() => setOpenIndex(index)}
+                onMouseLeave={() => setOpenIndex(null)}
               >
-                Products
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="productsDropdown">
-                <li><Link className="dropdown-item" to="/productPage/chicken">Chicken</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/milk">Cow Milk</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/honey">Honey</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/beeswax">Bee Wax</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/eggs">Eggs</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/duck">Duck</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/fish">Fish</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/fruits">Fruits</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/guava">Guava</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/amla">Amla</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/lemon">Lemon</Link></li>
-                <li><Link className="dropdown-item" to="/productPage/ghee">Ghee</Link></li>
-              </ul>
-            </li>
-            <li>
-              <NavLink className="nav-link" to="/contact">Contact</NavLink>
+                <a className="nav-link dropdown-toggle" href="#">
+                  {item.label}
+                </a>
+                <ul className={`dropdown-menu ${openIndex === index ? "show" : ""}`}>
+                  {item.options.map((opt, i) => (
+                    <li key={i}>
+                      <NavLink className="dropdown-item" to={opt.link}>
+            {opt.label}
+          </NavLink>
+                    </li>
+                  ))}
+
+                </ul>
+              </li>
+            ))}
+            <li className="nav-item">
+              <NavLink end className="nav-link" to="/con">Contact</NavLink>
             </li>
           </ul>
         </div>
