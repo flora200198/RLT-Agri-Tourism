@@ -6,11 +6,11 @@ import Home from './Pages/Home/Home';
 import Activities from './Pages/Activities/Activities';
 import Contact from './Pages/Contact/Contact';
 import './App.css';
-import BookingWizard from './Pages/Booking/Booking';
 import AboutFarm from './Pages/About/About';
 import ProductsSection from './Pages/Product/Product';
 import ProductPage from './Pages/Product/ProductDetail'; // Updated import for ProductPage
 import BookingPage from './Pages/Booking/Bookings';
+import WhatsAppButton from './components/Whatsapp/Whatsapp';
 
 export default function App() {
   return (
@@ -25,7 +25,9 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path='/book' element={< BookingPage />} />
+        
       </Routes>
+      <WhatsAppButton />
       <Footer />
     </>
   );
