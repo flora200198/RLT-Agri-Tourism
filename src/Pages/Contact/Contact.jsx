@@ -1,12 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { submitContact } from '../../services/Api';
 
 const Contact = () => {
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(null);
+    setError(null);
+    try {
+      await submitContact(form);
+      setSuccess('Message sent successfully!');
+      setForm({ name: '', phone: '', message: '' });
+    } catch (err) {
+      setError('Failed to send message. Please try again.');
+    }
+    setLoading(false);
+  };
 
   return (
     <div className="container my-5">
@@ -39,12 +68,15 @@ const Contact = () => {
         {/* Right Side - Contact Form */}
         <div className="col-md-6" data-aos="fade-left">
           {/* <h4 className="mb-3">Send us a Message</h4> */}
-          <form className="shadow p-4 rounded bg-light">
+          <form className="shadow p-4 rounded bg-light" onSubmit={handleSubmit}>
             <div className="mb-3">
               <label className="form-label">Name</label>
               <input
                 type="text"
                 className="form-control"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
                 placeholder="Enter your name"
                 required
               />
@@ -54,6 +86,9 @@ const Contact = () => {
               <input
                 type="tel"
                 className="form-control"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
                 placeholder="Enter your phone number"
                 required
               />
@@ -71,17 +106,23 @@ const Contact = () => {
               <label className="form-label">Message</label>
               <textarea
                 className="form-control"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
                 rows="4"
                 placeholder="Write your message..."
                 required
               ></textarea>
             </div>
+            {success && <div className="alert alert-success">{success}</div>}
+            {error && <div className="alert alert-danger">{error}</div>}
             <button
               type="submit"
               className="btn btn-primary w-100"
               data-aos="zoom-in"
+              disabled={loading}
             >
-              Submit
+              {loading ? 'Submitting...' : 'Submit'}
             </button>
           </form>
         </div>
