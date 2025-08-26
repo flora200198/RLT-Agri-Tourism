@@ -8,14 +8,10 @@ router.post('/contact', async(req, res) => {
     if(!name || !phone){
         return res.status(400).json({ok:false, message:'Name and Phone are required' })
     }
-
-    const clean = {
-        name: String(name).trim(),
-        phone: String(phone).trim(),
-        message: message? String(message).trim():'',
-    }
     try{
-        const contact = await Contact.create(clean);
+        // const contact = await Contact.create(clean);
+        const contact = new Contact ({name, phone, message});
+        await contact.save();
         console.log(contact);
        res.status(201).json({ok: true, message:'Contact submitted successfully'});
 

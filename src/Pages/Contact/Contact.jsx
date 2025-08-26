@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { submitContact } from '../../services/Api';
+import { PostContactForm } from '../../services/Api';
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -13,6 +13,7 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
@@ -27,11 +28,19 @@ const Contact = () => {
     setLoading(true);
     setSuccess(null);
     setError(null);
+  
+      const payload = {
+      name: form.name.trim(),
+      phone: form.phone.trim(), 
+      message: form.message.trim(),
+    };
     try {
-      await submitContact(form);
+      await PostContactForm(payload);
+      console.log(form);
       setSuccess('Message sent successfully!');
       setForm({ name: '', phone: '', message: '' });
     } catch (err) {
+      console.error("Error to post the data to backend:", error)
       setError('Failed to send message. Please try again.');
     }
     setLoading(false);
