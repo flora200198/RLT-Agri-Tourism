@@ -29,13 +29,13 @@ const Contact = () => {
     setSuccess(null);
     setError(null);
   
-      const payload = {
-      name: form.name.trim(),
-      phone: form.phone.trim(), 
-      message: form.message.trim(),
-    };
+    //   const payload = {
+    //   name: form.name.trim(),
+    //   phone: form.phone.trim(), 
+    //   message: form.message.trim(),
+    // };
     try {
-      await PostContactForm(payload);
+      await PostContactForm(form);
       console.log(form);
       setSuccess('Message sent successfully!');
       setForm({ name: '', phone: '', message: '' });
@@ -102,15 +102,6 @@ const Contact = () => {
                 required
               />
             </div>
-            {/* <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Enter your email"
-                required
-              />
-            </div> */}
             <div className="mb-3">
               <label className="form-label">Message</label>
               <textarea
