@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "919080902615"; // Replace with your WhatsApp number (with country code, no +)
+  const phoneNumber = "919080902615"; 
   const message = "Hello 👋, I am interested in your Agri Tourism packages. Can you share details about farm visits, farm stays, horse riding, boating, and other activities?";
 
   return (
@@ -13,7 +13,7 @@ export default function WhatsAppButton() {
         position: "fixed",
         bottom: "20px",
         right: "20px",
-        backgroundColor: "#25D366",
+        backgroundColor: "#ece02dff",
         color: "white",
         borderRadius: "50%",
         width: "60px",
