@@ -9,6 +9,12 @@ const BookingPage = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const location = useLocation();
 
+
+  const today = new Date().toISOString().split('T')[0];
+  const nowTime = new Date().toTimeString().slice(0, 5);
+
+
+
   // Pricing configuration
   const pricing = {
     adventure: {
@@ -25,15 +31,15 @@ const BookingPage = () => {
   };
 
   useEffect(() => {
-  const typeFromStorage = localStorage.getItem('selectedBookingType');
+    const typeFromStorage = localStorage.getItem('selectedBookingType');
 
-  let typeFromPath = '';
-  if (location.pathname.includes('/activities/book')) typeFromPath = 'adventure';
-  if (location.pathname.includes('/staying/book')) typeFromPath = 'stay';
+    let typeFromPath = '';
+    if (location.pathname.includes('/activities/book')) typeFromPath = 'adventure';
+    if (location.pathname.includes('/staying/book')) typeFromPath = 'stay';
 
-  setSelectedType(typeFromStorage || typeFromPath || '');
-  // Do NOT remove localStorage here if you want to persist type for later
-}, [location.pathname]);
+    setSelectedType(typeFromStorage || typeFromPath || '');
+    // Do NOT remove localStorage here if you want to persist type for later
+  }, [location.pathname]);
 
 
   // Calculate total for stay booking
@@ -42,7 +48,7 @@ const BookingPage = () => {
     const totalPersons = parseInt(details.adults) + parseInt(details.children);
     const roomsNeeded = Math.ceil(totalPersons / pricing.stay.personLimit);
     const additionalPersonCost = Math.max(0, totalPersons - (pricing.stay.personLimit * roomsNeeded)) * pricing.stay.additionalPersonCharge;
-    
+
     return {
       basePrice: basePrice * roomsNeeded,
       additionalPersonCost,
@@ -90,7 +96,7 @@ const BookingPage = () => {
     };
 
     const renderPaymentForm = () => {
-      switch(selectedPaymentMethod) {
+      switch (selectedPaymentMethod) {
         case 'upi':
           return (
             <div className="mb-4">
@@ -100,13 +106,13 @@ const BookingPage = () => {
                 className="form-control"
                 placeholder="yourname@upi"
                 value={paymentData.upiId}
-                onChange={(e) => setPaymentData({...paymentData, upiId: e.target.value})}
+                onChange={(e) => setPaymentData({ ...paymentData, upiId: e.target.value })}
                 required
               />
               <div className="form-text">Enter your UPI ID (e.g., name@ybl, name@okicici)</div>
             </div>
           );
-        
+
         case 'creditcard':
         case 'debitcard':
           return (
@@ -119,7 +125,7 @@ const BookingPage = () => {
                     className="form-control"
                     placeholder="1234 5678 9012 3456"
                     value={paymentData.cardNumber}
-                    onChange={(e) => setPaymentData({...paymentData, cardNumber: e.target.value})}
+                    onChange={(e) => setPaymentData({ ...paymentData, cardNumber: e.target.value })}
                     required
                   />
                 </div>
@@ -130,7 +136,7 @@ const BookingPage = () => {
                     className="form-control"
                     placeholder="123"
                     value={paymentData.cvv}
-                    onChange={(e) => setPaymentData({...paymentData, cvv: e.target.value})}
+                    onChange={(e) => setPaymentData({ ...paymentData, cvv: e.target.value })}
                     required
                   />
                 </div>
@@ -143,7 +149,7 @@ const BookingPage = () => {
                     className="form-control"
                     placeholder="MM/YY"
                     value={paymentData.expiryDate}
-                    onChange={(e) => setPaymentData({...paymentData, expiryDate: e.target.value})}
+                    onChange={(e) => setPaymentData({ ...paymentData, expiryDate: e.target.value })}
                     required
                   />
                 </div>
@@ -154,14 +160,14 @@ const BookingPage = () => {
                     className="form-control"
                     placeholder="John Doe"
                     value={paymentData.cardHolder}
-                    onChange={(e) => setPaymentData({...paymentData, cardHolder: e.target.value})}
+                    onChange={(e) => setPaymentData({ ...paymentData, cardHolder: e.target.value })}
                     required
                   />
                 </div>
               </div>
             </>
           );
-        
+
         default:
           return null;
       }
@@ -203,10 +209,10 @@ const BookingPage = () => {
                   <label className="form-label fw-bold">Select Payment Method *</label>
                   <div className="row g-3">
                     <div className="col-md-4">
-                      <div 
+                      <div
                         className={`card payment-method-card ${selectedPaymentMethod === 'upi' ? 'border-primary' : ''}`}
                         onClick={() => setSelectedPaymentMethod('upi')}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: 'pointer' }}
                       >
                         <div className="card-body text-center">
                           <i className="fas fa-mobile-alt fa-2x mb-2"></i>
@@ -215,10 +221,10 @@ const BookingPage = () => {
                       </div>
                     </div>
                     <div className="col-md-4">
-                      <div 
+                      <div
                         className={`card payment-method-card ${selectedPaymentMethod === 'creditcard' ? 'border-primary' : ''}`}
                         onClick={() => setSelectedPaymentMethod('creditcard')}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: 'pointer' }}
                       >
                         <div className="card-body text-center">
                           <i className="fas fa-credit-card fa-2x mb-2"></i>
@@ -227,10 +233,10 @@ const BookingPage = () => {
                       </div>
                     </div>
                     <div className="col-md-4">
-                      <div 
+                      <div
                         className={`card payment-method-card ${selectedPaymentMethod === 'debitcard' ? 'border-primary' : ''}`}
                         onClick={() => setSelectedPaymentMethod('debitcard')}
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: 'pointer' }}
                       >
                         <div className="card-body text-center">
                           <i className="fas fa-credit-card fa-2x mb-2"></i>
@@ -244,7 +250,7 @@ const BookingPage = () => {
                 {selectedPaymentMethod && (
                   <form onSubmit={handleSubmit}>
                     {renderPaymentForm()}
-                    
+
                     <div className="row">
                       <div className="col-md-6 mb-3">
                         <label className="form-label">Email *</label>
@@ -253,7 +259,7 @@ const BookingPage = () => {
                           className="form-control"
                           placeholder="john@example.com"
                           value={paymentData.email}
-                          onChange={(e) => setPaymentData({...paymentData, email: e.target.value})}
+                          onChange={(e) => setPaymentData({ ...paymentData, email: e.target.value })}
                           required
                         />
                       </div>
@@ -264,22 +270,22 @@ const BookingPage = () => {
                           className="form-control"
                           placeholder="+91 1234567890"
                           value={paymentData.phone}
-                          onChange={(e) => setPaymentData({...paymentData, phone: e.target.value})}
+                          onChange={(e) => setPaymentData({ ...paymentData, phone: e.target.value })}
                           required
                         />
                       </div>
                     </div>
 
                     <div className="d-grid gap-2">
-                      <button 
-                        type="submit" 
+                      <button
+                        type="submit"
                         className="btn btn-success btn-lg"
                         disabled={!selectedPaymentMethod}
                       >
                         Confirm Payment of ₹{bookingDetails.total}
                       </button>
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         className="btn btn-outline-secondary"
                         onClick={() => setShowPayment(false)}
                       >
@@ -318,7 +324,7 @@ const BookingPage = () => {
                   <p><strong>Booking Reference:</strong> #BK{Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
                   <p><strong>Total Paid:</strong> ₹{bookingDetails.total}</p>
                   <p><strong>Payment Method:</strong> {selectedPaymentMethod.toUpperCase()}</p>
-                  
+
                   {bookingDetails.type === 'stay' && (
                     <>
                       <p><strong>Room Type:</strong> {bookingDetails.roomType}</p>
@@ -328,7 +334,7 @@ const BookingPage = () => {
                       <p><strong>Check-out:</strong> {bookingDetails.checkOutDate}</p>
                     </>
                   )}
-                  
+
                   {bookingDetails.type === 'adventure' && (
                     <>
                       <p><strong>Activity:</strong> {getActivityName(bookingDetails.activity)}</p>
@@ -349,7 +355,7 @@ const BookingPage = () => {
                   </ul>
                 </div>
 
-                <button 
+                <button
                   className="btn btn-primary"
                   onClick={() => window.location.reload()}
                 >
@@ -395,10 +401,10 @@ const BookingPage = () => {
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <label className="form-label">Select Activity *</label>
-                      <select 
-                        className="form-select" 
-                        value={formData.activity} 
-                        onChange={(e) => setFormData({...formData, activity: e.target.value})}
+                      <select
+                        className="form-select"
+                        value={formData.activity}
+                        onChange={(e) => setFormData({ ...formData, activity: e.target.value })}
                         required
                       >
                         <option value="">-- Select Activity --</option>
@@ -416,7 +422,7 @@ const BookingPage = () => {
                         min="1"
                         max="20"
                         value={formData.numGuests}
-                        onChange={(e) => setFormData({...formData, numGuests: parseInt(e.target.value)})}
+                        onChange={(e) => setFormData({ ...formData, numGuests: parseInt(e.target.value) })}
                         required
                       />
                     </div>
@@ -428,7 +434,8 @@ const BookingPage = () => {
                         type="date"
                         className="form-control"
                         value={formData.date}
-                        onChange={(e) => setFormData({...formData, date: e.target.value})}
+                        min={today}
+                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                         required
                       />
                     </div>
@@ -438,14 +445,15 @@ const BookingPage = () => {
                         type="time"
                         className="form-control"
                         value={formData.time}
-                        onChange={(e) => setFormData({...formData, time: e.target.value})}
+                        min={formData.date === today ? nowTime : '00:00'}
+                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                         required
                       />
                     </div>
                   </div>
                   {formData.activity && (
                     <div className="alert alert-info">
-                      <strong>Price Breakdown:</strong><br/>
+                      <strong>Price Breakdown:</strong><br />
                       {formData.numGuests} guest(s) × ₹{getActivityPrice()} = ₹{getActivityPrice() * formData.numGuests}
                     </div>
                   )}
@@ -470,12 +478,25 @@ const BookingPage = () => {
       adults: 1,
       children: 0
     });
+      const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinutes = now.getMinutes();
 
+  // Disable check-in for current date after 12 PM
+  const isToday = formData.checkInDate === today;
+  const checkinDisabled = isToday && (currentHour >= 12);
+
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   const calculation = calculateStayTotal(formData);
+    //   handleBookingSubmit({ ...formData, ...calculation }, 'stay');
+    // };
     const handleSubmit = (e) => {
-      e.preventDefault();
-      const calculation = calculateStayTotal(formData);
-      handleBookingSubmit({ ...formData, ...calculation }, 'stay');
-    };
+  e.preventDefault();
+  if(checkinDisabled) return; // prevent booking
+  const calculation = calculateStayTotal(formData);
+  handleBookingSubmit({ ...formData, ...calculation }, 'stay');
+};
 
     const calculation = calculateStayTotal(formData);
     const totalPersons = parseInt(formData.adults) + parseInt(formData.children);
@@ -493,10 +514,10 @@ const BookingPage = () => {
                   <div className="row">
                     <div className="col-md-6 mb-3">
                       <label className="form-label">Room Type *</label>
-                      <select 
-                        className="form-select" 
-                        value={formData.roomType} 
-                        onChange={(e) => setFormData({...formData, roomType: e.target.value})}
+                      <select
+                        className="form-select"
+                        value={formData.roomType}
+                        onChange={(e) => setFormData({ ...formData, roomType: e.target.value })}
                         required
                       >
                         <option value="">-- Select Room Type --</option>
@@ -517,7 +538,7 @@ const BookingPage = () => {
                             min="1"
                             max="10"
                             value={formData.adults}
-                            onChange={(e) => setFormData({...formData, adults: parseInt(e.target.value)})}
+                            onChange={(e) => setFormData({ ...formData, adults: parseInt(e.target.value) })}
                             required
                           />
                         </div>
@@ -529,7 +550,7 @@ const BookingPage = () => {
                             min="0"
                             max="10"
                             value={formData.children}
-                            onChange={(e) => setFormData({...formData, children: parseInt(e.target.value)})}
+                            onChange={(e) => setFormData({ ...formData, children: parseInt(e.target.value) })}
                           />
                         </div>
                       </div>
@@ -542,9 +563,15 @@ const BookingPage = () => {
                         type="date"
                         className="form-control"
                         value={formData.checkInDate}
-                        onChange={(e) => setFormData({...formData, checkInDate: e.target.value})}
+                        min={today}
+                        onChange={(e) => setFormData({ ...formData, checkInDate: e.target.value })}
                         required
                       />
+                      {checkinDisabled && (
+                        <div className="alert alert-warning mt-2">
+                          Check-in for today is not allowed after 12:00 PM. Please select a future date.
+                        </div>
+                      )}
                     </div>
                     <div className="col-md-6 mb-3">
                       <label className="form-label">Check-out Date *</label>
@@ -552,25 +579,26 @@ const BookingPage = () => {
                         type="date"
                         className="form-control"
                         value={formData.checkOutDate}
-                        onChange={(e) => setFormData({...formData, checkOutDate: e.target.value})}
+                        min={formData.checkInDate || today}
+                        onChange={(e) => setFormData({ ...formData, checkOutDate: e.target.value })}
                         required
                       />
                     </div>
                   </div>
-                  
+
                   {totalPersons > 0 && (
                     <div className="alert alert-info">
-                      <strong>Price Calculation:</strong><br/>
-                      - Rooms Required: {calculation.roomsNeeded} × ₹{pricing.stay.basePrice} = ₹{calculation.basePrice}<br/>
+                      <strong>Price Calculation:</strong><br />
+                      - Rooms Required: {calculation.roomsNeeded} × ₹{pricing.stay.basePrice} = ₹{calculation.basePrice}<br />
                       {calculation.additionalPersonCost > 0 && (
-                        <>- Additional Person Charge: ₹{calculation.additionalPersonCost}<br/></>
+                        <>- Additional Person Charge: ₹{calculation.additionalPersonCost}<br /></>
                       )}
                       - <strong>Grand Total: ₹{calculation.total}</strong>
                     </div>
                   )}
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-success w-100"
                     disabled={totalPersons === 0}
                   >
