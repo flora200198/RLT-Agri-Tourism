@@ -25,11 +25,16 @@ const BookingPage = () => {
   };
 
   useEffect(() => {
-    const typeFromStorage = localStorage.getItem('selectedBookingType');
-    const typeFromState = location.state?.type;
-    setSelectedType(typeFromState || typeFromStorage || '');
-    localStorage.removeItem('selectedBookingType');
-  }, [location.state]);
+  const typeFromStorage = localStorage.getItem('selectedBookingType');
+
+  let typeFromPath = '';
+  if (location.pathname.includes('/activities/book')) typeFromPath = 'adventure';
+  if (location.pathname.includes('/staying/book')) typeFromPath = 'stay';
+
+  setSelectedType(typeFromStorage || typeFromPath || '');
+  // Do NOT remove localStorage here if you want to persist type for later
+}, [location.pathname]);
+
 
   // Calculate total for stay booking
   const calculateStayTotal = (details) => {

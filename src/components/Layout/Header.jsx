@@ -5,14 +5,16 @@ import './Header.css';
 
 const Header = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [heldIndex, setHeldIndex] = useState(null);
+
   const navigate = useNavigate();
   
   const navItems = [
     {
       label: "Explore nature with Us",
       options: [
-        { label: "Adventures", link: "/book", image: '/assets/Adventure.png', type: 'adventure' },
-        { label: "Adventures with stay", link: "/book", image: '/assets/FarmHouse.png', type: 'stay' },
+        { label: "Adventures", link: "activities/book", image: '/assets/Adventure.png', type: 'adventure' },
+        { label: "Adventures with stay", link: "staying/book", image: '/assets/FarmHouse.png', type: 'stay' },
       ],
     },
     {
@@ -72,7 +74,7 @@ const Header = () => {
             <li className="nav-item">
               <NavLink className="nav-link" to="/products">Farm Fresh</NavLink>
             </li>
-            {navItems.map((item, index) => (
+            {/* {navItems.map((item, index) => (
               <li
                 key={index}
                 className="nav-item dropdown position-static"
@@ -118,7 +120,79 @@ const Header = () => {
                   </div>
                 </ul>
               </li>
-            ))}
+            ))} */}
+            {navItems.map((item, index) => (
+  <li
+    key={index}
+    className="nav-item dropdown position-static"
+    onMouseEnter={() => {
+      if (!heldIndex) setOpenIndex(index); // only open on hover if not held
+    }}
+    onMouseLeave={() => {
+      if (!heldIndex) setOpenIndex(null); // close on hover leave if not held
+    }}
+  >
+    <span
+      className="nav-link"
+      onClick={() => {
+        if (heldIndex === index) {
+          // toggle off if already held
+          setHeldIndex(null);
+          setOpenIndex(null);
+        } else {
+          // hold open on click
+          setHeldIndex(index);
+          setOpenIndex(index);
+        }
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      {item.label}
+    </span>
+
+    <ul
+      className={`dropdown-menu w-100 border-0 shadow p-4 custom-grid-dropdown ${openIndex === index ? "show" : ""}`}
+      style={{
+        left: 0,
+        right: 0,
+        top: "100%",
+      }}
+      data-bs-auto-close="outside"
+    >
+      <div className="container">
+        <div className="row g-4">
+          {item.options.map((opt, i) => (
+            <div className="col-6 col-md-3" key={i}>
+              <div
+                onClick={() => {
+                  handleOptionClick(opt.type, opt.link);
+                  setOpenIndex(null); // close dropdown after selecting
+                  setHeldIndex(null);  // remove hold after selecting
+                }}
+                className="dropdown-item d-flex flex-column align-items-center text-center"
+                style={{ padding: "10px", cursor: "pointer" }}
+              >
+                <img
+                  src={opt.image}
+                  alt={opt.label}
+                  style={{
+                    width: "100%",
+                    height: "140px",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <span>{opt.label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ul>
+  </li>
+))}
+
             <li className="nav-item">
               <NavLink end className="nav-link" to="/contact">Contact</NavLink>
             </li>

@@ -24,8 +24,8 @@ export default function App() {
         <Route path="/productPage/:slug" element={<ProductPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path='/book' element={< BookingPage />} />
-        
+        <Route path="/activities/book" element={<BookingPage />} />
+        <Route path="/staying/book" element={<BookingPage />} />
       </Routes>
       <WhatsAppButton />
       <Footer />
