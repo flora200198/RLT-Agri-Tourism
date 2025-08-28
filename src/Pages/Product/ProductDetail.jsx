@@ -55,7 +55,7 @@ export default function ProductPage() {
                 </li>
               </ol>
             </nav>
-            
+
             <h1 className="display-6 fw-bold">{product.name}</h1>
             <img src={product.heroImg} alt={product.name} className="mb-3" style={{ width: 60, height: 60 }} />
             <p className="lead">{product.short}</p>
@@ -196,10 +196,16 @@ export default function ProductPage() {
                       ))}
                     </div>
                     <div className="d-grid mt-3">
-                      <button className="btn btn-success">
-                        <i className="bi bi-basket2 me-2" />
-                        Add to Cart
-                      </button>
+                      <a
+                        href="https://wa.me/9080902615?text=Hello%2C%20I%20am%20interested%20in%20this%20product"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="btn btn-success">
+                          <i className="bi bi-basket2 me-2" />
+                          Message on WhatsApp
+                        </button>
+                      </a>
                     </div>
                   </div>
                 </div>
