@@ -1,34 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-// const Contact = require('../Models/Contact.model');
-
-// // POST /api/contact
-// router.post('/contact', async (req, res) => {
-//   try {
-//     const { name, phone, message } = req.body;
-
-//     // Validation
-//     if (!name || !phone) {
-//       return res.status(400).json({ ok: false, message: 'Name and Phone are required' });
-//     }
-
-//     // Save to DB
-//     const contact = new Contact({ name, phone, message });
-//     await contact.save();
-
-//     console.log("✅ Contact saved:", contact);
-
-//     res.status(201).json({ ok: true, message: 'Contact submitted successfully' });
-//   } catch (error) {
-//     console.error("❌ Error saving contact:", error);
-//     res.status(500).json({ ok: false, message: 'Internal Server Error' });
-//   }
-// });
-
-// module.exports = router;
-
-
-// Routes/Contact.js
 const express = require('express');
 const router = express.Router();
 

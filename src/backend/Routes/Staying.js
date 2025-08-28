@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Booking = require('../Models/Booking');
 
+let stayBookings = [];
+
 // POST /api/staying/book
 router.post('/book', async (req, res) => {
   try {
@@ -18,8 +20,8 @@ router.post('/book', async (req, res) => {
       payment,
       stayDetails
     });
-
-    await booking.save();
+    stayBookings.push(booking);
+    // await booking.save();
     res.status(201).json({ message: "Staying booking successful", booking });
   } catch (err) {
     console.error(err);
