@@ -36,7 +36,7 @@ const HeroSection = () => {
               Explore Activities
             </button>
             </Link>
-            <Link to="/book">
+            <Link to="/activities/book">
             <button className="btn btn-outline-light btn-lg" >
               Book a Farm Visit
             </button></Link>
@@ -145,20 +145,6 @@ const HeroSection = () => {
           <div className="row g-4 align-items-center">
             <div className="col-12 col-lg-6">
               <div className="row g-3">
-                {/* <div className="col-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1578301978018-3005759f48d7?q=80&w=1200&auto=format&fit=crop"
-                    alt="Happy cows grazing"
-                    className="img-fluid rounded-3 shadow-sm"
-                  />
-                </div>
-                <div className="col-6">
-                  <img
-                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"
-                    alt="Sun-drenched fields"
-                    className="img-fluid rounded-3 shadow-sm"
-                  />
-                </div> */}
                 <div className="col-12">
                   <img
                     src="/assets/Farm-booking.png"
@@ -202,7 +188,7 @@ const HeroSection = () => {
               </ul>
 
               <div className="d-flex gap-3 mt-3 flex-wrap">
-               <Link to='/book' ><button variant="primary" className="btn btn-primary btn-lg" >Plan Your Visit</button> </Link> 
+               <Link to='/staying/book' ><button variant="primary" className="btn btn-primary btn-lg" >Plan Your Visit</button> </Link> 
               <Link to='/products'><button  variant="outline-primary" className="btn btn-outline-light btn-lg product" >See Products</button></Link>
               </div>
             </div>
