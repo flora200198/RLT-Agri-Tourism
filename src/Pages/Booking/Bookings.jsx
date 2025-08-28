@@ -37,7 +37,7 @@ const BookingPage = () => {
     if (location.pathname.includes('/activities/book')) typeFromPath = 'adventure';
     if (location.pathname.includes('/staying/book')) typeFromPath = 'stay';
 
-    setSelectedType(typeFromStorage || typeFromPath || '');
+    setSelectedType(typeFromPath || '');
     // Do NOT remove localStorage here if you want to persist type for later
   }, [location.pathname]);
 

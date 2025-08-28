@@ -13,6 +13,7 @@ const HeroSection = () => {
           src="/assets/Landing Video.mp4"   // place your file in public/assets/
           autoPlay
           muted
+          opacity={1.2}
           loop
           playsInline
         />
