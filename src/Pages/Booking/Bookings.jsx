@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import ActivityDetails from './ActivityDetails';
+import StayDetails from './StayingDetails';
+
 
 const BookingPage = () => {
   const [selectedType, setSelectedType] = useState('');
@@ -370,104 +373,216 @@ const BookingPage = () => {
   };
 
   // Adventure Form Component
-  const AdventureForm = () => {
-    const [formData, setFormData] = useState({
-      activity: '',
-      numGuests: 1,
-      date: '',
-      time: ''
-    });
+  // const AdventureForm = () => {
+  //   const [formData, setFormData] = useState({
+  //     activity: '',
+  //     numGuests: 1,
+  //     date: '',
+  //     time: ''
+  //   });
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const total = pricing.adventure[formData.activity] * formData.numGuests;
-      handleBookingSubmit({ ...formData, total }, 'adventure');
-    };
+  //   const handleSubmit = (e) => {
+  //     e.preventDefault();
+  //     const total = pricing.adventure[formData.activity] * formData.numGuests;
+  //     handleBookingSubmit({ ...formData, total }, 'adventure');
+  //   };
 
-    const getActivityPrice = () => {
-      return formData.activity ? pricing.adventure[formData.activity] : 0;
-    };
+  //   const getActivityPrice = () => {
+  //     return formData.activity ? pricing.adventure[formData.activity] : 0;
+  //   };
 
-    return (
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-8">
-            <div className="card shadow">
-              <div className="card-header bg-primary text-white">
-                <h3 className="mb-0">Adventure Booking</h3>
-              </div>
-              <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Select Activity *</label>
-                      <select
-                        className="form-select"
-                        value={formData.activity}
-                        onChange={(e) => setFormData({ ...formData, activity: e.target.value })}
-                        required
-                      >
-                        <option value="">-- Select Activity --</option>
-                        <option value="farm">One Day Farm Visit (₹1500)</option>
-                        <option value="bday">Birthday Party (₹2500)</option>
-                        <option value="swimming">Swimming Pool with Food (₹2000)</option>
-                        <option value="avroom">AV Room with Food (₹3000)</option>
-                      </select>
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Number of Guests *</label>
-                      <input
-                        type="number"
-                        className="form-control"
-                        min="1"
-                        max="20"
-                        value={formData.numGuests}
-                        onChange={(e) => setFormData({ ...formData, numGuests: parseInt(e.target.value) })}
-                        required
-                      />
-                    </div>
+  //   return (
+  //     <div className="container mt-5">
+  //       <div className="row justify-content-center">
+  //         <div className="col-md-8">
+  //           <div className="card shadow">
+  //             <div className="card-header bg-primary text-white">
+  //               <h3 className="mb-0">Adventure Booking</h3>
+  //             </div>
+  //             <div className="card-body">
+  //               <form onSubmit={handleSubmit}>
+  //                 <div className="row">
+  //                   <div className="col-md-6 mb-3">
+  //                     <label className="form-label">Select Activity *</label>
+  //                     <select
+  //                       className="form-select"
+  //                       value={formData.activity}
+  //                       onChange={(e) => setFormData({ ...formData, activity: e.target.value })}
+  //                       required
+  //                     >
+  //                       <option value="">-- Select Activity --</option>
+  //                       <option value="farm">One Day Farm Visit (₹1500)</option>
+  //                       <option value="bday">Birthday Party (₹2500)</option>
+  //                       <option value="swimming">Swimming Pool with Food (₹2000)</option>
+  //                       <option value="avroom">AV Room with Food (₹3000)</option>
+  //                     </select>
+  //                   </div>
+  //                   <div className="col-md-6 mb-3">
+  //                     <label className="form-label">Number of Guests *</label>
+  //                     <input
+  //                       type="number"
+  //                       className="form-control"
+  //                       min="1"
+  //                       max="20"
+  //                       value={formData.numGuests}
+  //                       onChange={(e) => setFormData({ ...formData, numGuests: parseInt(e.target.value) })}
+  //                       required
+  //                     />
+  //                   </div>
+  //                 </div>
+  //                 <div className="row">
+  //                   <div className="col-md-6 mb-3">
+  //                     <label className="form-label">Date *</label>
+  //                     <input
+  //                       type="date"
+  //                       className="form-control"
+  //                       value={formData.date}
+  //                       min={today}
+  //                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+  //                       required
+  //                     />
+  //                   </div>
+  //                   <div className="col-md-6 mb-3">
+  //                     <label className="form-label">Time *</label>
+  //                     <input
+  //                       type="time"
+  //                       className="form-control"
+  //                       value={formData.time}
+  //                       min={formData.date === today ? nowTime : '00:00'}
+  //                       onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+  //                       required
+  //                     />
+  //                   </div>
+  //                 </div>
+  //                 {formData.activity && (
+  //                   <div className="alert alert-info">
+  //                     <strong>Price Breakdown:</strong><br />
+  //                     {formData.numGuests} guest(s) × ₹{getActivityPrice()} = ₹{getActivityPrice() * formData.numGuests}
+  //                   </div>
+  //                 )}
+  //                 <button type="submit" className="btn btn-primary w-100">
+  //                   Proceed to Payment
+  //                 </button>
+  //               </form>
+  //               {/* {selectedType === 'adventure' && <ActivityDetails activity={selectedType === 'adventure' ? document.querySelector('select').value : ''} />} */}
+
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+ // Adventure Form Component
+const AdventureForm = () => {
+  const [formData, setFormData] = useState({
+    activity: '',
+    numGuests: 1,
+    date: '',
+    time: ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const total = pricing.adventure[formData.activity] * formData.numGuests;
+    handleBookingSubmit({ ...formData, total }, 'adventure');
+  };
+
+  const getActivityPrice = () => {
+    return formData.activity ? pricing.adventure[formData.activity] : 0;
+  };
+
+  return (
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <div className="card shadow">
+            <div className="card-header bg-primary text-white">
+              <h3 className="mb-0">Adventure Booking</h3>
+            </div>
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label">Select Activity *</label>
+                    <select
+                      className="form-select"
+                      value={formData.activity}
+                      onChange={(e) =>
+                        setFormData({ ...formData, activity: e.target.value })
+                      }
+                      required
+                    >
+                      <option value="">-- Select Activity --</option>
+                      <option value="farm">One Day Farm Visit (₹1500)</option>
+                      <option value="bday">Birthday Party (₹2500)</option>
+                      <option value="swimming">Swimming Pool with Food (₹2000)</option>
+                      <option value="avroom">AV Room with Food (₹3000)</option>
+                    </select>
                   </div>
-                  <div className="row">
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Date *</label>
-                      <input
-                        type="date"
-                        className="form-control"
-                        value={formData.date}
-                        min={today}
-                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6 mb-3">
-                      <label className="form-label">Time *</label>
-                      <input
-                        type="time"
-                        className="form-control"
-                        value={formData.time}
-                        min={formData.date === today ? nowTime : '00:00'}
-                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        required
-                      />
-                    </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label">Number of Guests *</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      min="1"
+                      max="20"
+                      value={formData.numGuests}
+                      onChange={(e) =>
+                        setFormData({ ...formData, numGuests: parseInt(e.target.value) })
+                      }
+                      required
+                    />
                   </div>
-                  {formData.activity && (
-                    <div className="alert alert-info">
-                      <strong>Price Breakdown:</strong><br />
-                      {formData.numGuests} guest(s) × ₹{getActivityPrice()} = ₹{getActivityPrice() * formData.numGuests}
-                    </div>
-                  )}
-                  <button type="submit" className="btn btn-primary w-100">
-                    Proceed to Payment
-                  </button>
-                </form>
-              </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label">Date *</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={formData.date}
+                      min={today}
+                      onChange={(e) =>
+                        setFormData({ ...formData, date: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label">Time *</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      value={formData.time}
+                      min={formData.date === today ? nowTime : '00:00'}
+                      onChange={(e) =>
+                        setFormData({ ...formData, time: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+
+                {formData.activity && (
+                  <div className="alert alert-info">
+                    <strong>Price Breakdown:</strong><br />
+                    {formData.numGuests} guest(s) × ₹{getActivityPrice()} = ₹{getActivityPrice() * formData.numGuests}
+                  </div>
+                )}
+
+                <button type="submit" className="btn btn-primary w-100">
+                  Proceed to Payment
+                </button>
+              </form>  
             </div>
           </div>
+                {formData.activity && <ActivityDetails activity={formData.activity} />}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
   // Stay Form Component
   const StayForm = () => {
@@ -607,6 +722,7 @@ const BookingPage = () => {
                 </form>
               </div>
             </div>
+             <StayDetails />
           </div>
         </div>
       </div>
