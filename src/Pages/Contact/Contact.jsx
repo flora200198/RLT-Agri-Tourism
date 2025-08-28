@@ -24,27 +24,49 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setSuccess(null);
-    setError(null);
-  
-    //   const payload = {
-    //   name: form.name.trim(),
-    //   phone: form.phone.trim(), 
-    //   message: form.message.trim(),
-    // };
-    try {
-      await PostContactForm(form);
-      console.log(form);
-      setSuccess('Message sent successfully!');
-      setForm({ name: '', phone: '', message: '' });
-    } catch (err) {
-      console.error("Error to post the data to backend:", error)
-      setError('Failed to send message. Please try again.');
-    }
+  e.preventDefault();
+  setLoading(true);
+  setSuccess(null);
+  setError(null);
+
+  try {
+    await PostContactForm(form);
+    console.log("Form submitted:", form);
+    setSuccess('Message sent successfully!');
+    setForm({ name: '', phone: '', message: '' });
+  } catch (err) {
+  if (err.response) {
+    // Server responded but with a status error (400, 500, etc.)
+    console.error("Backend error:", err.response.data);
+    setError(err.response.data.message || "Server returned an error");
+  } else if (err.request) {
+    // Request was made but no response received
+    console.error("No response from backend:", err.request);
+    setError("No response from server. Check if backend is running.");
+  } else {
+    // Something else went wrong
+    console.error("Error setting up request:", err.message);
+    setError("Something went wrong.");
+  }
+  } finally {
     setLoading(false);
-  };
+  }
+};
+
+//  const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const result = await PostContactForm({
+//       name: "flora",
+//       phone: "09080902615",
+//       message: "Hello"
+//     });
+//     console.log("Form submitted:", result);
+//   } catch (err) {
+//     console.error("Submit failed:", err);
+//   }
+// };
+
 
   return (
     <div className="container my-5">
@@ -119,7 +141,6 @@ const Contact = () => {
             <button
               type="submit"
               className="btn btn-primary w-100"
-              data-aos="zoom-in"
               disabled={loading}
             >
               {loading ? 'Submitting...' : 'Submit'}
