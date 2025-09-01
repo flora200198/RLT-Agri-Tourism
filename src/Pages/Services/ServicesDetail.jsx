@@ -32,7 +32,7 @@ const ServicePage = () => {
       <section
         className="position-relative text-white d-flex align-items-center justify-content-center"
         style={{
-          backgroundImage: `url(${service.heroImg})`,
+          backgroundImage: `url(${service.image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           minHeight: "70vh",
@@ -76,7 +76,7 @@ const ServicePage = () => {
             <h2 className="h3 text-center mb-5">How It Works</h2>
             <div className="row g-4 align-items-center">
               <div className="col-lg-6">
-                <ol className="list-group list-group-numbered">
+                <ul className="list-group ">
                   {service.process.map((step, i) => (
                     <li
                       key={i}
@@ -86,7 +86,7 @@ const ServicePage = () => {
                       <p className="mb-0 text-muted">{step.desc}</p>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </div>
               <div className="col-lg-6 text-center">
                 {service.video ? (
@@ -99,7 +99,7 @@ const ServicePage = () => {
                   </div>
                 ) : (
                   <img
-                    src={service.processImg}
+                    src={service.image}
                     alt="Process"
                     className="img-fluid rounded shadow"
                   />
