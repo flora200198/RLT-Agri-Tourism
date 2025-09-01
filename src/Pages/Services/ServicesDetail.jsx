@@ -1,22 +1,25 @@
-// ProductPage.jsx
-import React, { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import Services from "./ServicesData";
+import { useMemo } from "react";
+import ServicesMenu from "./ServicesData";
 
-export default function ProductPage() {
+const ServicePage = () => {
   const { slug } = useParams();
-  const product = useMemo(
-    () => Services.find((p) => p.slug === slug),
-    [slug]
-  );
 
-  if (!product) {
+  // Find the service by slug (from link)
+  const service = useMemo(() => {
+    return ServicesMenu.options.find((s) => {
+      const serviceSlug = s.link.split("/").pop(); 
+      return serviceSlug === slug;
+    });
+  }, [slug]);
+
+  if (!service) {
     return (
       <section className="py-5">
         <div className="container text-center">
-          <h1 className="h4 mb-3">Product not found</h1>
-          <Link to="/products" className="btn btn-success">
-            View All Products
+          <h1 className="h4 mb-3">Service not found</h1>
+          <Link to="/services" className="btn btn-success">
+            View All Services
           </Link>
         </div>
       </section>
@@ -27,212 +30,137 @@ export default function ProductPage() {
     <main>
       {/* Hero */}
       <section
-        className="position-relative text-white"
+        className="position-relative text-white d-flex align-items-center justify-content-center"
         style={{
-          backgroundImage: `url(${product.heroImg})`,
+          backgroundImage: `url(${service.heroImg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          minHeight: 260,
+          minHeight: "70vh",
         }}
       >
         <div
-          className="w-100 h-100"
-          style={{ backdropFilter: "brightness(0.6)" }}
-          aria-hidden="true"
+          className="w-100 h-100 position-absolute top-0 start-0"
+          style={{ backdropFilter: "brightness(0.5)" }}
         />
-        <div className="container position-absolute top-50 start-50 translate-middle">
-          <div className="text-center">
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb justify-content-center">
-                <li className="breadcrumb-item">
-                  <Link to="/">Home</Link>
-                </li>
-                <li className="breadcrumb-item">
-                  <Link to="/products">Products</Link>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  {product.name}
-                </li>
-              </ol>
-            </nav>
+        <div className="container text-center position-relative z-1">
+          <h1 className="display-4 fw-bold">{service.label}</h1>
+          <p className="lead">{service.tagline}</p>
+          <a href="#details" className="btn btn-lg btn-success shadow mt-3">
+            Learn More
+          </a>
+        </div>
+      </section>
 
-            <h1 className="display-6 fw-bold">{product.name}</h1>
-            <img src={product.heroImg} alt={product.name} className="mb-3" style={{ width: 60, height: 60 }} />
-            <p className="lead">{product.short}</p>
+      {/* Highlights */}
+      <section className="py-5" id="details">
+        <div className="container">
+          <h2 className="h3 text-center mb-5">Why Choose Our Service</h2>
+          <div className="row g-4">
+            {service.highlights?.map((h, i) => (
+              <div key={i} className="col-md-4">
+                <div className="card border-0 shadow-sm h-100 text-center p-4">
+                  <i className={`bi ${h.icon} text-success fs-1 mb-3`} />
+                  <h5>{h.title}</h5>
+                  <p className="text-muted">{h.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="py-5 bg-light">
-        <div className="container">
-          <div className="row g-4">
-            {/* Highlights & Variants */}
-            <div className="col-lg-7">
-              <div className="card border-0 shadow-sm mb-4">
-                <div className="card-body">
-                  <h2 className="h5 mb-3">Why you’ll love it</h2>
-                  <ul className="list-unstyled m-0">
-                    {product.highlights?.map((h, i) => (
-                      <li key={i} className="d-flex align-items-start mb-2">
-                        <i className="bi bi-check2-circle text-success me-2 fs-5" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      {/* Process */}
+      {service.process && (
+        <section className="py-5 bg-light">
+          <div className="container">
+            <h2 className="h3 text-center mb-5">How It Works</h2>
+            <div className="row g-4 align-items-center">
+              <div className="col-lg-6">
+                <ol className="list-group list-group-numbered">
+                  {service.process.map((step, i) => (
+                    <li
+                      key={i}
+                      className="list-group-item d-flex flex-column align-items-start"
+                    >
+                      <h6 className="fw-bold">{step.title}</h6>
+                      <p className="mb-0 text-muted">{step.desc}</p>
+                    </li>
+                  ))}
+                </ol>
               </div>
-
-              {/* Accordions */}
-              <div className="accordion" id="productAccordions">
-                {/* Process */}
-                {product.accordions?.process && (
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingProcess">
-                      <button
-                        className="accordion-button"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseProcess"
-                        aria-expanded="true"
-                        aria-controls="collapseProcess"
-                      >
-                        Farm to Customer
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseProcess"
-                      className="accordion-collapse collapse show"
-                      aria-labelledby="headingProcess"
-                      data-bs-parent="#productAccordions"
-                    >
-                      <div className="accordion-body">
-                        {product.accordions.process}
-                      </div>
-                    </div>
+              <div className="col-lg-6 text-center">
+                {service.video ? (
+                  <div className="ratio ratio-16x9 rounded shadow overflow-hidden">
+                    <iframe
+                      src={service.video}
+                      title="Service Video"
+                      allowFullScreen
+                    />
                   </div>
-                )}
-
-                {/* Usage */}
-                {product.accordions?.usage && (
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingUsage">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseUsage"
-                        aria-expanded="false"
-                        aria-controls="collapseUsage"
-                      >
-                        Usage & Storage
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseUsage"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingUsage"
-                      data-bs-parent="#productAccordions"
-                    >
-                      <div className="accordion-body">
-                        <ul className="mb-0">
-                          {product.accordions.usage.map((u, i) => (
-                            <li key={i}>{u}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Availability */}
-                {product.accordions?.availability && (
-                  <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingAvail">
-                      <button
-                        className="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#collapseAvail"
-                        aria-expanded="false"
-                        aria-controls="collapseAvail"
-                      >
-                        Availability
-                      </button>
-                    </h2>
-                    <div
-                      id="collapseAvail"
-                      className="accordion-collapse collapse"
-                      aria-labelledby="headingAvail"
-                      data-bs-parent="#productAccordions"
-                    >
-                      <div className="accordion-body">
-                        {product.accordions.availability}
-                      </div>
-                    </div>
-                  </div>
+                ) : (
+                  <img
+                    src={service.processImg}
+                    alt="Process"
+                    className="img-fluid rounded shadow"
+                  />
                 )}
               </div>
-            </div>
-
-            {/* Order / Variants / Nutrition */}
-            <div className="col-lg-5">
-              {/* Variants */}
-              {product.variants?.length ? (
-                <div className="card border-0 shadow-sm mb-4">
-                  <div className="card-body">
-                    <h2 className="h6 mb-3">Select Variant</h2>
-                    <div className="vstack gap-2">
-                      {product.variants.map((v) => (
-                        <div
-                          key={v.label}
-                          className="d-flex justify-content-between align-items-center p-3 border rounded-3"
-                        >
-                          <span className="fw-semibold">{v.label}</span>
-                          <span className="text-success fw-bold">
-                            ₹ {v.price}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="d-grid mt-3">
-                      <a
-                        href="https://wa.me/9080902615?text=Hello%2C%20I%20am%20interested%20in%20this%20product"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <button className="btn btn-success">
-                          <i className="bi bi-basket2 me-2" />
-                          Message on WhatsApp
-                        </button>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ) : null}
-
-              {/* Nutrition */}
-              {product.nutrition?.length ? (
-                <div className="card border-0 shadow-sm">
-                  <div className="card-body">
-                    <h2 className="h6 mb-3">Nutrition Info</h2>
-                    <table className="table table-sm align-middle mb-0">
-                      <tbody>
-                        {product.nutrition.map(([k, v]) => (
-                          <tr key={k}>
-                            <th className="fw-normal">{k}</th>
-                            <td className="text-end">{v}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ) : null}
             </div>
           </div>
+        </section>
+      )}
+
+      {/* Testimonials */}
+      {service.testimonials?.length ? (
+        <section className="py-5">
+          <div className="container">
+            <h2 className="h3 text-center mb-5">What Our Clients Say</h2>
+            <div className="row g-4">
+              {service.testimonials.map((t, i) => (
+                <div key={i} className="col-md-4">
+                  <div className="card border-0 shadow-sm h-100 p-4">
+                    <p className="fst-italic">“{t.feedback}”</p>
+                    <div className="d-flex align-items-center mt-3">
+                      <img
+                        src={t.avatar}
+                        alt={t.name}
+                        className="rounded-circle me-3"
+                        width="50"
+                        height="50"
+                      />
+                      <div>
+                        <h6 className="mb-0">{t.name}</h6>
+                        <small className="text-muted">{t.role}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* CTA */}
+      <section className="py-5 bg-success text-white text-center">
+        <div className="container">
+          <h2 className="h3 fw-bold mb-3">
+            Ready to Get Started with {service.label}?
+          </h2>
+          <p className="mb-4">{service.ctaText}</p>
+          <a
+            href={`https://wa.me/9080902615?text=I%20am%20interested%20in%20the%20${service.label}%20service`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-lg btn-light text-success fw-semibold"
+          >
+            <i className="bi bi-whatsapp me-2" />
+            Contact Us on WhatsApp
+          </a>
         </div>
       </section>
     </main>
   );
-}
+};
+
+export default ServicePage;

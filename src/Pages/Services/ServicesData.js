@@ -5,7 +5,7 @@ export const ServicesMenu = {
   options: [
     {
       label: "Organic Villa",
-      link: "/ServicePage/organic-villa",
+      link: "/servicePage/organic-villa",
       image: "/assets/Organic-villa.png",
       type: "service",
       desc: "Providing eco-friendly and sustainable organic living solutions for healthier lifestyles.",
@@ -18,7 +18,7 @@ export const ServicesMenu = {
     },
     {
       label: "Gardening",
-      link: "/ServicePage/gardening",
+      link: "/servicePage/gardening",
       image: "/assets/Gardening.png",
       type: "service",
       desc: "Complete gardening solutions including setup, maintenance, and seasonal care.",
@@ -31,7 +31,7 @@ export const ServicesMenu = {
     },
     {
       label: "Landscaping",
-      link: "/ServicePage/landscaping",
+      link: "/servicePage/landscaping",
       image: "/assets/Landscaping.png",
       type: "service",
       desc: "Professional landscaping services to enhance the aesthetics and functionality of spaces.",
@@ -44,7 +44,7 @@ export const ServicesMenu = {
     },
     {
       label: "Terrace Gardening",
-      link: "/ServicePage/terrace-gardening",
+      link: "/servicePage/terrace-gardening",
       image: "/assets/Terrace-gardening.png",
       type: "service",
       desc: "Convert unused rooftops into green, productive gardens.",
@@ -57,7 +57,7 @@ export const ServicesMenu = {
     },
     {
       label: "Indoor Gardening",
-      link: "/ServicePage/indoor-gardening",
+      link: "/servicePage/indoor-gardening",
       image: "/assets/Indoor-gardening.png",
       type: "service",
       desc: "Bring greenery inside homes and offices with tailored indoor plant setups.",
@@ -70,7 +70,7 @@ export const ServicesMenu = {
     },
     {
       label: "Hydroponics",
-      link: "/ServicePage/hydroponics",
+      link: "/servicePage/hydroponics",
       image: "/assets/Hydroponics.png",
       type: "service",
       desc: "Soil-less farming solutions using nutrient-rich water systems.",
@@ -83,7 +83,7 @@ export const ServicesMenu = {
     },
     {
       label: "Herbal Gardening",
-      link: "/ServicePage/herbal-gardening",
+      link: "/servicePage/herbal-gardening",
       image: "/assets/Herbal-Gardening.png",
       type: "service",
       desc: "Grow medicinal and aromatic herbs for health and wellness.",
@@ -96,7 +96,7 @@ export const ServicesMenu = {
     },
     {
       label: "Vertical Gardening",
-      link: "/ServicePage/vertical-gardening",
+      link: "/servicePage/vertical-gardening",
       image: "/assets/Vertical-gardening.png",
       type: "service",
       desc: "Space-saving gardening solutions using vertical walls.",
@@ -109,7 +109,7 @@ export const ServicesMenu = {
     },
     {
       label: "Lab Testing",
-      link: "/ServicePage/lab-testing",
+      link: "/servicePage/lab-testing",
       image: "/assets/Lab.png",
       type: "service",
       desc: "Soil and water testing services to ensure healthy plant growth.",
@@ -122,7 +122,7 @@ export const ServicesMenu = {
     },
     {
       label: "Quality Checking",
-      link: "/ServicePage/quality-checking",
+      link: "/servicePage/quality-checking",
       image: "/assets/Quality.png",
       type: "service",
       desc: "Inspection and quality assurance of gardening and farming setups.",
@@ -135,7 +135,7 @@ export const ServicesMenu = {
     },
     {
       label: "Trimming & Pruning",
-      link: "/ServicePage/trimming-pruning",
+      link: "/servicePage/trimming-pruning",
       image: "/assets/Trimming.png",
       type: "service",
       desc: "Professional trimming and pruning services for healthier plant growth.",
@@ -148,7 +148,7 @@ export const ServicesMenu = {
     },
     {
       label: "Consultation Services",
-      link: "/ServicePage/consultation",
+      link: "/servicePage/consultation",
       image: "/assets/Consultation.png",
       type: "service",
       desc: "Expert consultation on gardening, farming, and organic solutions.",
