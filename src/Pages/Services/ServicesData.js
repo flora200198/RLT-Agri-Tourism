@@ -13,7 +13,7 @@ export const ServicesMenu = {
         "Initial consultation to understand client needs",
         "Site analysis and eco-friendly material selection",
         "Implementation of organic lifestyle solutions",
-        "Post-installation support and guidance",
+        "Post-installation support and guidance",okokok
       ],
     },
     {
