@@ -83,7 +83,7 @@ const ServicePage = () => {
                       className="list-group-item d-flex flex-column align-items-start"
                     >
                       <h6 className="fw-bold">{step.title}</h6>
-                      <p className="mb-0 text-muted">{step.desc}</p>jjj
+                      <p className="mb-0 text-muted">{step.desc}</p>
                     </li>
                   ))}
                 </ul>
