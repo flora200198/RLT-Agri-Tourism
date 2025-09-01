@@ -5,7 +5,6 @@
   --primary-green: #2e7d32;   /* rich farm green */
   --primary-yellow: #fdd835;  /* vibrant yellow */
   --secondary-blue: #1565c0;  /* deep blue */
-
   --text-dark: #222;
   --text-light: #fff;
   --bg-light: #f9faf6;
@@ -86,7 +85,6 @@ a:hover {
 ========================= */
 .btn-primary {
   background-color: var(--primary-yellow);
-  /* border-color: var(--primary-green); */
    color: var(--text-dark);
   border-radius: 5px;
  
@@ -99,6 +97,7 @@ a:hover {
 
 .btn-outline-light {
   border: 2px solid var(--primary-yellow);
+  background-color: var(--primary-yellow) ;
   /* color: var(--primary-yellow); */
 }
 
@@ -107,9 +106,7 @@ a:hover {
   color: var(--text-dark);
 }
 
-/* =========================
-   Section Styling
-========================= */
+
 section {
   padding: 60px 0;
 }

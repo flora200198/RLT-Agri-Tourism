@@ -55,6 +55,7 @@ const activities = [
     title: "Duck Feeding",
     description: "Feed ducks by the pond and watch them waddle happily.",
     image: '/assets/DuckFeeding.png',
+    link:'/'
   },
   {
     title: "Bullock Cart Ride",

@@ -33,6 +33,23 @@ const Header = () => {
         { label: "Seasonal Fruits", link: "/ProductPage/fruits", image:'/assets/Fruits.png', type: 'product' },
       ],
     },
+    {
+      label: "Services",
+      options: [
+        { label: "Organic Villa", link: "/ProductPage/milk", image:'/assets/Organic-villa.png', type: 'product' },
+        { label: "Gardening", link: "/ProductPage/eggs", image:'/assets/Gardening.png', type: 'product' },
+        { label: "Landscaping", link: "/ProductPage/eggs", image:'/assets/Landscaping.png', type: 'product' },
+        { label: "Terrace Gardening", link: "/ProductPage/chicken", image:'/assets/Terrace-gardening.png', type: 'product' },
+        { label: "Indoor Gardening", link: "/ProductPage/duck", image:'/assets/Indoor-gardening.png', type: 'product' },
+        { label: "Hydroponics", link: "/ProductPage/honey", image:'/assets/Hydroponics.png', type: 'product' },
+        { label: "Herbal Gardening", link: "/ProductPage/beeswax", image:'/assets/Herbal-Gardening.png', type: 'product' },
+        { label: "Vertical Gardening", link: "/ProductPage/ghee", image:'/assets/Vertical-gardening.png', type: 'product' },
+        { label: "Lab testing", link: "/ProductPage/amla", image:'/assets/Lab.png', type: 'product' },
+        { label: "Quality Checking", link: "/ProductPage/guava", image:'/assets/Quality.png', type: 'product' },
+        { label: "Trimming & Pruning", link: "/ProductPage/lemon", image:'/assets/Trimming.png', type: 'product' },
+        { label: "Consultation Services", link: "/ProductPage/fruits", image:'/assets/Consultation.png', type: 'product' },
+      ],
+    },
   ];
 
   const handleOptionClick = (type, link) => {
