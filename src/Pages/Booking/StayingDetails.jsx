@@ -71,10 +71,6 @@ const StayDetails = () => {
               Your browser does not support the video tag.
             </video>
           </div>
-          {/* <div className="col-md-6 mb-3">
-            <h5>Fun GIF Preview:</h5>
-            <img src={stayMedia.gif} className="img-fluid rounded" alt="stay preview gif" />
-          </div> */}
         </div>
       </div>
     </div>

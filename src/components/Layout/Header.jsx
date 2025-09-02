@@ -52,11 +52,16 @@ const Header = () => {
     },
   ];
 
+  // const handleOptionClick = (type, link) => {
+  //   // Store the selected type in localStorage or pass as state
+  //   localStorage.setItem('selectedBookingType', type);
+  //   navigate(link);
+  // };
+
   const handleOptionClick = (type, link) => {
-    // Store the selected type in localStorage or pass as state
-    localStorage.setItem('selectedBookingType', type);
-    navigate(link);
-  };
+  navigate(link, { state: { bookingType: type } });
+};
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

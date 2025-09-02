@@ -11,6 +11,16 @@ const BookingPage = () => {
   const [bookingDetails, setBookingDetails] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const location = useLocation();
+  const [formData, setFormData] = useState({
+    activity: "",
+    numGuests: 1,
+    date: "",
+    time: "",
+    adults: "",
+    children: "",
+    checkInDate: "",
+    checkOutDate: ""
+  });
 
 
   const today = new Date().toISOString().split('T')[0];
@@ -61,12 +71,14 @@ const BookingPage = () => {
     };
   };
 
-  const handleBookingSubmit = (details, type) => {
-    setBookingDetails({ ...details, type });
-    setShowPayment(true);
-  };
+  const handleBookingSubmit = (payload, type) => {
+    console.log("submitted data for adventure:", payload)
+  setBookingDetails({ type, ...payload.details });
+  setShowPayment(true);
+};
 
   const handlePaymentSubmit = (paymentData) => {
+    console.log("Processing payment with data:", paymentData);
     setBookingConfirmed(true);
     setShowPayment(false);
   };
@@ -93,10 +105,16 @@ const BookingPage = () => {
       phone: ''
     });
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      handlePaymentSubmit(paymentData);
-    };
+   const handleSubmit = (e) => {
+  e.preventDefault();
+  handleBookingSubmit(
+    {
+      details: formData   // wrap payload inside details
+    },
+    "adventure"
+  );
+};
+
 
     const renderPaymentForm = () => {
       switch (selectedPaymentMethod) {
@@ -284,6 +302,7 @@ const BookingPage = () => {
                         type="submit"
                         className="btn btn-success btn-lg"
                         disabled={!selectedPaymentMethod}
+                        onClick={() => handlePaymentSubmit(paymentData)}
                       >
                         Confirm Payment of ₹{bookingDetails.total}
                       </button>
