@@ -1,5 +1,6 @@
 // AboutFarm.jsx
 import React from "react";
+import {Link} from "react-router-dom";
 
 const AboutFarm = () => {
   // Replace these image URLs with your actual assets
@@ -309,10 +310,14 @@ const AboutFarm = () => {
               </p>
             </div>
             <div className="col-lg-4 text-lg-end">
-              <a href="/book" className="btn btn-light fw-semibold" >
+              {/* <a href="/book" className="btn btn-light fw-semibold" >
                 <i className="bi bi-calendar2-week me-2" />
                 Book a Farm Visit
-              </a>
+              </a> */}
+              <Link to="/activities/book" className="btn btn-light fw-semibold ms-2">
+                <i className="bi bi-compass me-2" />
+                Book a Farm Visit
+              </Link>
             </div>
           </div>
         </div>
