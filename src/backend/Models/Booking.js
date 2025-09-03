@@ -2,42 +2,51 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BookingSchema = new Schema({
-  type: { type: String, required: true, enum: ["activity", "staying"] }, 
+  type: { 
+    type: String, 
+    required: true, 
+    enum: ["stay", "adventure"]  // match frontend
+  },
+
   customerName: { type: String, required: true },
   customerPhone: { type: String, required: true },
 
   // Payment Info
   payment: {
-    method: { type: String, enum: ["upi", "credit_card", "debit_card"], required: true },
+    status: { type: String, enum: ["paid", "pending"], required: true },
+    method: { type: String, enum: ["upi", "credit_card", "debit_card", "cash"], required: true },
     transactionId: { type: String },
 
+    // Optional fields
     upiId: { type: String },
-
     cardLast4: { type: String },
     cardHolderName: { type: String },
     expiryMonth: { type: Number },
     expiryYear: { type: Number }
   },
 
-  // Activity Booking
-  activityDetails: {
-    activityName: { type: String },
-    guestsCount: { type: Number },
+  // Adventure Booking
+  adventureDetails: {
+    activity: { type: String }, // farm, swimming, etc.
+    participants: { type: Number },
     date: { type: Date },
-    time: { type: String }
+    timeSlot: { type: String }
   },
 
-  // Staying Booking
+  // Stay Booking
   stayDetails: {
     roomType: { type: String },
-    adultsCount: { type: Number },
-    childrenCount: { type: Number },
-    totalGuests: { type: Number },
-    checkinDate: { type: Date },
-    checkoutDate: { type: Date },
-    totalAmount: { type: Number },
-    gst: { type: Number }
+    rooms: { type: Number },
+    adults: { type: Number },
+    kids: { type: Number },
+    infants: { type: Number },
+    checkIn: { type: Date },
+    checkOut: { type: Date }
   },
+
+  // Common
+  totalAmount: { type: Number, required: true },
+  status: { type: String, default: "pending" },
 
   createdAt: { type: Date, default: Date.now }
 });
