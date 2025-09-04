@@ -2,9 +2,9 @@ import React from 'react';
 
 // Media for stay
 const stayMedia = {
-  image: "https://images.unsplash.com/photo-1582719478184-90f0d0eeb3e0?auto=format&fit=crop&w=800&q=60",
-  video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+  image: "/assets/FarmStay.png",
+  // video: "https://www.w3schools.com/html/mov_bbb.mp4",
+  // gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
 };
 
 const StayDetails = () => {
@@ -63,7 +63,7 @@ const StayDetails = () => {
         </div>
 
         {/* Video/GIF Section */}
-        <div className="row mt-3">
+        {/* <div className="row mt-3">
           <div className="col-md-6 mb-3">
             <h5>Watch a Video:</h5>
             <video controls className="w-100 rounded">
@@ -71,7 +71,7 @@ const StayDetails = () => {
               Your browser does not support the video tag.
             </video>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
