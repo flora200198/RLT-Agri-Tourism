@@ -8,7 +8,7 @@ const activityMedia = {
     // gif: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
   },
   bday: {
-    image: "/assets/bday.png",
+    image: "/assets/Bday.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
     // gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
   },
