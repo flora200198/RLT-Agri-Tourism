@@ -3,22 +3,22 @@ import React from 'react';
 // Sample media for each activity
 const activityMedia = {
   farm: {
-    image: "https://images.unsplash.com/photo-1592928304413-1f14d6c4e1b4?auto=format&fit=crop&w=800&q=60",
+    image: "/assets/Pool.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4", // Sample video URL
     // gif: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
   },
   bday: {
-    image: "https://images.unsplash.com/photo-1607004430147-0bb6c7f8e6bb?auto=format&fit=crop&w=800&q=60",
+    image: "/assets/bday.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
     // gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
   },
   swimming: {
-    image: "https://images.unsplash.com/photo-1585101239723-25f292e7f84b?auto=format&fit=crop&w=800&q=60",
+    image: "/assets/Pool.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
     // gif: "https://media.giphy.com/media/l3vR1vLZxBo7GmGv6/giphy.gif"
   },
   avroom: {
-    image: "https://images.unsplash.com/photo-1601924928342-3ee4edc4b9e5?auto=format&fit=crop&w=800&q=60",
+    image: "/assets/AV.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4",
     // gif: "https://media.giphy.com/media/3o7TKPscxvU2Zd2tGM/giphy.gif"
   }
@@ -117,20 +117,20 @@ const ActivityDetails = ({ activity }) => {
         </div>
 
         {/* Video/GIF Section */}
-        <div className="row mt-3">
-          <div className="col-md-6 mb-3">
-            <h5>Watch a Video:</h5>
-            <video controls className="w-100 rounded">
+        {/* <div className="row mt-3">
+          <div className="col-md-6 mb-3"> */}
+            {/* <h5>Watch a Video:</h5> */}
+            {/* <video controls className="w-100 rounded">
               <source src={media.video} type="video/mp4" />
               Your browser does not support the video tag.
-            </video>
+            </video> */}
           </div>
           {/* <div className="col-md-6 mb-3">
             <h5>Fun GIF Preview:</h5>
             <img src={media.gif} className="img-fluid rounded" alt="activity preview gif" />
           </div> */}
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
     </div>
   );
 };

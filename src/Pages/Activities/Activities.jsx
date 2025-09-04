@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const activities = [
   {
@@ -69,15 +71,28 @@ const activities = [
   },
 ];
 
+
+
 const Activities = () => {
+  const navigate = useNavigate();
+ const handleCardClick = (activity) => {
+    navigate("/activities/book", {
+      state: { selectedActivity: activity.title },
+    });
+  };
   return (
-    <section className="activities-section py-5">
+     <section className="activities-section py-5">
       <div className="container">
         <h2 className="text-center mb-5 fw-bold">Adventure Activities</h2>
 
         <div className="row g-4">
           {activities.map((activity, index) => (
-            <div className="col-12 col-md-6 col-lg-4" key={index}>
+            <div
+              className="col-12 col-md-6 col-lg-4"
+              key={index}
+              onClick={() => handleCardClick(activity)}
+              style={{ cursor: "pointer" }}
+            >
               <div
                 className="activity-item position-relative overflow-hidden rounded-3 shadow-sm"
                 style={{
@@ -85,7 +100,6 @@ const Activities = () => {
                   height: "260px",
                 }}
               >
-                {/* Overlay */}
                 <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center text-center text-white p-3">
                   <h4 className="fw-semibold">{activity.title}</h4>
                   <p className="mb-0 small">{activity.description}</p>
