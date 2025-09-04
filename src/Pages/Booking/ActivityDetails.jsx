@@ -3,7 +3,7 @@ import React from 'react';
 // Sample media for each activity
 const activityMedia = {
   farm: {
-    image: "/assets/Pool.png",
+    image: "/assets/OnedayFarmVisit.png",
     video: "https://www.w3schools.com/html/mov_bbb.mp4", // Sample video URL
     // gif: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
   },
